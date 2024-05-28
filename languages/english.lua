@@ -68,6 +68,15 @@ TUNING.INFINITEDREAM =
 	USE = "Infinite Tsukuyomi!" 
 }
 
+TUNING.MAKERAIN = 
+{ 
+	NAME = "Rain Summon",
+	RECIPE = "Power of Nature",
+	DESCRIBE = "Summons rain.",
+	USE = "Rain Summon",
+	STOPUSE = "Stop Rain"
+}
+
 TUNING.STRENGTHOFA100 =
 {
 	NAME = "Reverse Seal Scroll",
@@ -177,11 +186,33 @@ TUNING.RAIJINKUNAI =
 	NAME = "Raijin Kunai"
 }
 
-TUNING.CLASSICHEADBAND = 
+TUNING.ARMOR = 
 {
-	NAME = "Classic Blue Headband",
-	RECIPE = "Represent your Village",
-	DESCRIBE = "Increases Chakra Regeneration."
+	NAME = "Plate Armor",
+	RECIPE = "Crimson in color.",
+	DESCRIBE = "Protects the chest and shoulders."
+}
+
+
+TUNING.HEADBANDBLACKMISSING = 
+{
+	NAME = "Protector of the Village of Rain",
+	RECIPE = "Crossed out.",
+	DESCRIBE = "Increases chakra regeneration."
+}
+
+TUNING.HEADBANDFOG = 
+{
+	NAME = "Protector of the Village of Mist",
+	RECIPE = "Hidden in the fog.",
+	DESCRIBE = "Increases chakra regeneration."
+}
+
+TUNING.HEADBANDBLUE = 
+{
+	NAME = "Protector of the Village of Leaf",
+	RECIPE = "A place where someone still thinks about you is a place you can call home.",
+	DESCRIBE = "Increases chakra regeneration."
 }
 
 TUNING.KUSANAGI = 

@@ -68,6 +68,15 @@ TUNING.INFINITEDREAM =
 	USE = "无限月读！" 
 }
 
+TUNING.MAKERAIN = 
+{ 
+	NAME = "召唤雨水",
+	RECIPE = "自然之力",
+	DESCRIBE = "召唤雨水。",
+	USE = "召唤雨水",
+	STOPUSE = "停止雨水"
+}
+
 TUNING.STRENGTHOFA100 =
 {
 	NAME = "里封印卷轴",
@@ -177,11 +186,33 @@ TUNING.RAIJINKUNAI =
 	NAME = "飞雷神苦无"
 }
 
-TUNING.CLASSICHEADBAND = 
+TUNING.ARMOR = 
 {
-	NAME = "传统蓝色护额",
-	RECIPE = "代表你的忍者村",
-	DESCRIBE = "提升查克拉回复"
+	NAME = "板甲",
+	RECIPE = "深红色。",
+	DESCRIBE = "保护胸部和肩膀。"
+}
+
+
+TUNING.HEADBANDBLACKMISSING = 
+{
+	NAME = "雨之村的守护者",
+	RECIPE = "被划掉了。",
+	DESCRIBE = "增加查克拉回复速度。"
+}
+
+TUNING.HEADBANDFOG = 
+{
+	NAME = "雾之村的守护者",
+	RECIPE = "隐藏在雾中。",
+	DESCRIBE = "增加查克拉回复速度。"
+}
+
+TUNING.HEADBANDBLUE = 
+{
+	NAME = "叶之村的守护者",
+	RECIPE = "有人仍然想着你的地方就是你可以称之为家的地方。",
+	DESCRIBE = "增加查克拉回复速度。"
 }
 
 TUNING.KUSANAGI = 

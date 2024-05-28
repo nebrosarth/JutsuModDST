@@ -6,6 +6,12 @@ local chosenlanguage = GetModConfigData("language")
 
 if chosenlanguage == "russian" then
 	modimport "languages/russian.lua"
+else
+	if chosenlanguage == "english" then
+		modimport "languages/english.lua"
+	else
+		modimport "languages/chinese.lua"
+	end
 end
 
 _G = GLOBAL
@@ -428,7 +434,21 @@ AddCookerRecipe("cookpot", cooked_doshik_sousages_hot)
 
 local jr = -- jutsu recipes, might be messy but that's how I like it ;)
 {
-	{ item = "rinnerebirth", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 2}, ing3 = {"spidergland", 5}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "icerockdome", ing1 = {"paper", 1, paperxml}, ing2 = {"ice", 5}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "rasengan", ing1 = {"paper", 1, paperxml}, ing2 = {"lightbulb", 5}, ing3 = {"feather_crow", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "firerasengan", ing1 = {"rasengan", 1, scrollxml}, ing2 = {"nightmarefuel", 3}, ing3 = {"charcoal", 10}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "infinitedream", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 1}, ing3 = {"blowdart_sleep", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "strengthofa100", ing1 = {"paper", 1, paperxml}, ing2 = {"stinger", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "creationrebirth", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 1}, ing3 = {"healingsalve", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "creationrebirth100", ing1 = {"strengthofa100", 1, scrollxml}, ing2 = {"creationrebirth", 1, scrollxml}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "flyingraijin", ing1 = {"paper", 1, paperxml}, ing2 = {"purplegem", 1}, ing3 = {"flyingraijinkunai", 1, flyingkunaixml}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "multimudwall", ing1 = {"paper", 1, paperxml}, ing2 = {"cutstone", 10}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "watergun", ing1 = {"paper", 1, paperxml}, ing2 = {"waterballoon", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "expansion", ing1 = {"paper", 1, paperxml}, ing2 = {"bonestew", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "superexpansion", ing1 = {"expansion", 1, scrollxml}, ing2 = {"bonestew", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "deepforestemergence", ing1 = {"paper", 1, paperxml}, ing2 = {"log", 15}, ing3 = {"fertilizer", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },	{ item = "bubble", ing1 = {"paper", 1, paperxml}, ing2 = {"gunpowder", 2}, ing3 = {"waterballoon", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "rinnerebirth", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 2}, ing3 = {"spidergland", 5}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "icerockdome", ing1 = {"paper", 1, paperxml}, ing2 = {"ice", 5}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "rasengan", ing1 = {"paper", 1, paperxml}, ing2 = {"lightbulb", 5}, ing3 = {"feather_crow", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "firerasengan", ing1 = {"rasengan", 1, scrollxml}, ing2 = {"nightmarefuel", 3}, ing3 = {"charcoal", 10}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "infinitedream", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 1}, ing3 = {"blowdart_sleep", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "strengthofa100", ing1 = {"paper", 1, paperxml}, ing2 = {"stinger", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "creationrebirth", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 1}, ing3 = {"healingsalve", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "creationrebirth100", ing1 = {"strengthofa100", 1, scrollxml}, ing2 = {"creationrebirth", 1, scrollxml}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "flyingraijin", ing1 = {"paper", 1, paperxml}, ing2 = {"purplegem", 1}, ing3 = {"flyingraijinkunai", 1, flyingkunaixml}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "multimudwall", ing1 = {"paper", 1, paperxml}, ing2 = {"cutstone", 10}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "watergun", ing1 = {"paper", 1, paperxml}, ing2 = {"waterballoon", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "expansion", ing1 = {"paper", 1, paperxml}, ing2 = {"bonestew", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "superexpansion", ing1 = {"expansion", 1, scrollxml}, ing2 = {"bonestew", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "deepforestemergence", ing1 = {"paper", 1, paperxml}, ing2 = {"log", 15}, ing3 = {"fertilizer", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "bubble", ing1 = {"paper", 1, paperxml}, ing2 = {"gunpowder", 2}, ing3 = {"waterballoon", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
 	{ item = "shadowclone", ing1 = {"paper", 1, paperxml}, ing2 = {"beardhair", 2}, ing3 = {"lifeinjector", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
 	{ item = "makerain", ing1 = {"paper", 1, paperxml}, ing2 = {"purplegem", 3}, ing3 = {"moonrocknugget", 3}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex }
 }
