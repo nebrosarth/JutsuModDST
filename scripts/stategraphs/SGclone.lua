@@ -8,7 +8,7 @@ local function GetBB(inst)
 		end
 
 		if build == "rinneganwebber" then
-			build = "webber"
+			build = "rinneganwebber"
 		elseif build == "wolfgang_mighty" or "wolfgang_wimpy" then
 			build = "wolfgang"
 		end

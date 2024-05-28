@@ -1,6 +1,14 @@
 local Chakra = Class(function(self, inst)
     self.inst = inst
-    self.max = 100
+	if inst ~= nil then
+		if inst:HasTag("madara") then
+			self.max = 200 else 
+			if inst:HasTag("deidara") then
+			self.max = 150 else 
+				self.max = 100
+			end
+		end
+	end
     self.min = 0
     self.current = self.max
 	self.penalty = 0
@@ -176,7 +184,7 @@ end
 
 function Chakra:SetPenalty(penalty)
     --Penalty should never be less than 0% or ever above 80%.
-    self.penalty = math.clamp(penalty, 0, 0.8)
+    self.penalty = math.clamp(penalty, 0, 0.877)
 	SetReplicaPenalty(self, self.penalty)
 	
 	self:DoDelta(0)
@@ -211,7 +219,24 @@ end
 
 function Chakra:PenaltyDelta(delta)
 	if delta > 1 or delta < -1 then -- allows for both 0-1 and 0-100(but you can't increase by 1)
-		delta = delta / 100
+		if self.max == 150 then
+			if delta > 0 then delta = 0.134
+			else delta =-0.134
+			end
+		end	
+		
+		if self.max == 100 then
+			if delta > 0 then delta = 0.2
+			else delta =-0.2
+			end
+		end
+		
+		if self.max == 200 then
+			if delta > 0 then delta = 0.1
+			else delta = -0.1
+			end
+		end
+		
 	end
     self:SetPenalty(self.penalty + delta)
 end
@@ -221,7 +246,7 @@ function Chakra:CanPenaltyDelta(delta)
 		delta = delta / 100
 	end
 	local newpenalty = self.penalty + delta
-	if newpenalty > 0.8 then
+	if newpenalty > 0.877 then
 		return false -- if the new penalty is bigger than 80% 
 	else
 		return true

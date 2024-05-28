@@ -1,7 +1,7 @@
-name = "Jutsu Mod"
-description = "Become a Shinobi and Master all Jutsu!"
-author = "Aquaterion"
-version = "v1.4.4"
+name = "Jutsu Mod Russian"
+description = "chakra and jutsu"
+author = "nebrosarth"
+version = "28"
 
 forumthread = ""
 
@@ -22,14 +22,13 @@ configuration_options =
 		name = "language",
 		label = "Language",
 		options =	{
-                        {description = "English", data = "english"},
-						{description = "简体中文", data = "chinese"},	--simplified chinese
+						{description = "Russian", data = "russian"}
 					},
 
-		default = "english",
+		default = "russian",
 	
 	},
     
 }
 
-server_filter_tags = {"Naruto", "Chakra", "Jutsu", "Ninja"}
+server_filter_tags = {"Naruto", "Chakra", "Jutsu", "Ninja", "Deidara", "Madara", "Kusanagi", "Armor", "Kunai"}

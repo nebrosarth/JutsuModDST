@@ -77,7 +77,7 @@ end
 local function onkusanagiattack(wep, ninja, target)
 	local canuse = ninja.components.chakra:CheckEnough(10)
 	if target.oncooldown == nil and wep.chakraon and canuse and not target:HasTag("lightningrod") then
-		ninja.components.chakra:UseAmount(10)
+		ninja.components.chakra:UseAmount(30)
 
 		local duration = 3 --DURATION OF PARALYSES
 		local scale = 1--SCALE OF THUNDER FX
@@ -148,7 +148,7 @@ local function onkusanagiattack(wep, ninja, target)
 			end
 		end)
 	elseif wep.chakraon and canuse and target:HasTag("lightningrod") then
-		ninja.components.chakra:UseAmount(10)
+		ninja.components.chakra:UseAmount(30)
 		if target:HasTag("charged") then
 			target.components.health:DoDelta(60)
 		end
@@ -252,8 +252,7 @@ local function flyingraijinkunai()
     inst.AnimState:SetBank("kunai")
     inst.AnimState:SetBuild("kunai")
     inst.AnimState:PlayAnimation("idle")
-	
-	inst:AddTag("sharp")
+
 
     inst.entity:SetPristine()
     
@@ -290,7 +289,7 @@ local function flyingraijinkunai()
 	end)
 	
 	inst:AddComponent("weapon")
-	inst.components.weapon:SetDamage(25)
+	inst.components.weapon:SetDamage(24)
 	inst.components.weapon:SetRange(14, 16)
 	
    inst:AddComponent("projectile")
@@ -324,8 +323,6 @@ local function raijinkunai()
     inst.AnimState:SetBank("kunai")
     inst.AnimState:SetBuild("kunai")
     inst.AnimState:PlayAnimation("idle")
-	
-	inst:AddTag("sharp")
 
     inst.entity:SetPristine()
     
@@ -362,7 +359,7 @@ local function raijinkunai()
 	end)
 	
 	inst:AddComponent("weapon")
-	inst.components.weapon:SetDamage(25)
+	inst.components.weapon:SetDamage(24)
 	--inst.components.weapon:SetRange(14, 16)
 
 	return inst
@@ -428,8 +425,8 @@ local function kusanagi()
 	
     MakeInventoryPhysics(inst)
 	
-    inst.AnimState:SetBank("kunai")
-    inst.AnimState:SetBuild("kunai")
+    inst.AnimState:SetBank("kusanagi")
+    inst.AnimState:SetBuild("kusanagi")
     inst.AnimState:PlayAnimation("idle")
 	
 	inst:AddTag("sharp")
@@ -478,9 +475,9 @@ local function kusanagi()
 	inst:AddComponent("finiteuses")
     inst.components.finiteuses:SetMaxUses(50)
     inst.components.finiteuses:SetUses(50)
-	inst.components.finiteuses:SetConsumption(ACTIONS.CHOP, 12.5)
-    inst.components.finiteuses:SetConsumption(ACTIONS.MINE, 12.5)
-	inst.components.finiteuses:SetConsumption(ACTIONS.HAMMER, 12.5)
+	inst.components.finiteuses:SetConsumption(ACTIONS.CHOP, 2)
+    inst.components.finiteuses:SetConsumption(ACTIONS.MINE, 2)
+	inst.components.finiteuses:SetConsumption(ACTIONS.HAMMER, 2)
     inst.components.finiteuses:SetOnFinished(inst.Remove)
 	
 	inst.chakratask = nil

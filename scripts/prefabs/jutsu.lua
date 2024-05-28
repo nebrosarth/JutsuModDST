@@ -189,8 +189,8 @@ local jutsu_variables =
     {
 ----- RINNE REBIRTH JUTSU -----
         name = "rinnerebirth",
-		chakra = 90,
-		health = 15,
+		chakra = 99,
+		health = 30,
 		strings = { use = TUNING.RINNEREBIRTH.USE, using = TUNING.RINNEREBIRTH.USING, noghosts = TUNING.RINNEREBIRTH.NOGHOSTS },
 		tags = {"globalreincarnation", "utility"},
 		hauntable = true,
@@ -231,7 +231,7 @@ local jutsu_variables =
 							local skeletonfound = false
 							for k,skeleton in pairs(Ents) do
 								if skeleton.prefab == "skeleton_player" and skeleton.playername == player.name then
-									print(player.name .. " was revived via Rinne Rebirth Jutsu!")
+									print(player.name .. " возрождён техникой Божественного Воскрешения!")
 									local x, y, z = skeleton.Transform:GetWorldPosition()
 									player.Transform:SetPosition(x, y, z)
 									player:PushEvent("respawnfromghost", { source = { name = respawnmsg,  components = {} }  })
@@ -243,7 +243,7 @@ local jutsu_variables =
 							end
 							
 							if not skeletonfound then
-								print(player.name .. "was revived via Rinne Rebirth Jutsu")
+								print(player.name .. "возрождён техникой Божественного Воскрешения!")
 								player:PushEvent("respawnfromghost", { source = { name = respawnmsg,  components = {} }  })
 							end
 							
@@ -278,26 +278,28 @@ local jutsu_variables =
 ----- ICE ROCK DOME JUTSU -----
         name = "icerockdome",
 		chakra = 30,
+		health = 5,
 		strings = { use = TUNING.ICEROCKDOME.USE },
 		tags = { "defence", "utility"},
 		freeze = { self = 5, targets = 2, radius = 6},
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
-        onuse = function(jutsu, ninja)
+         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
 			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
 			local canuse = ninja.components.chakra
-			local consumejutsu = true
 			
 			if canuse then
+			    ninja.components.chakra:UseAmount(jv.chakra)
 				ninja.components.talker:Say(jv.strings.use)
 				ninja.components.freezable:Freeze(jv.freeze.self - 1)
 				ninja.components.freezable:SpawnShatterFX()
+				ninja.components.health:DoDelta(jv.health)
 				ninja.components.health:SetInvincible(true)
 				ninja:DoTaskInTime(jv.freeze.self, 
 					function()
 							ninja.components.health:SetInvincible(false)
 							ninja.components.temperature.current = ninja.components.temperature.current - 10
+							ninja.components.health:DoDelta(jv.health)
 							local x, y, z = ninja.Transform:GetWorldPosition()
 							local targets = TheSim:FindEntities(x, y, z, jv.freeze.radius)
 							if #targets > 0 then
@@ -312,13 +314,61 @@ local jutsu_variables =
 			else
 				consumejutsu = false
 			end
-
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
-				ninja.components.chakra:UseAmount(jv.chakra)
+			
+			jutsu.components.useableitem:StopUsingItem()
+        end,
+    },
+	
+	{
+----- MAKE RAIN JUTSU -----
+        name = "makerain",
+		chakra = 110,
+		strings = { use = TUNING.MAKERAIN.USE, stopuse = TUNING.MAKERAIN.STOPUSE },
+		tags = { "regeneration", "medical" },
+        onuse = function(jutsu, ninja)
+		local jv = jutsu.vars
+		ninja = jutsu.components.inventoryitem.owner or ninja
+		if not ninja.healingtask and not TheWorld.state.israining then
+		ninja.components.chakra:UseAmount(jv.chakra)
+		end
+		if ninja.healingtask and TheWorld.state.israining then
+		ninja.components.chakra:UseAmount(jv.chakra)
+		end
+			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
+			local canuse = true
+			local maxhp = ninja.components.health:GetMaxWithPenalty()
+			
+			if ninja.healingtask == nil then
+				ninja.healingtask = true
 			else
-				jutsu.components.useableitem:StopUsingItem()
+				ninja.healingtask = not ninja.healingtask
 			end
+			
+			if ninja.healingtask and TheWorld.state.israining then
+			ninja.healingtask = not ninja.healingtask
+			end
+			
+			if ninja.healingtask and not TheWorld.state.israining then
+			TheWorld:PushEvent("ms_forceprecipitation")
+			end
+			if ninja.healingtask then -- if healing is on then
+				ninja.components.talker:Say(jv.strings.use)
+				TheNet:Announce(ninja.name .. ": " .. jv.strings.use)
+				ninja.healing =  function()
+					canuse = ninja.components.chakra:CheckEnough(jv.chakra)
+							
+				end
+				end
+			 if TheWorld.state.israining and not ninja.healingtask then
+			TheNet:Announce(ninja.name .. ": " .. jv.strings.stopuse)
+				ninja.components.talker:Say(jv.strings.stopuse)
+				 -- incase we end up here without the task being on somehow.
+					
+					TheWorld:PushEvent("ms_forceprecipitation", false)		
+				
+			end
+
+			jutsu.components.useableitem:StopUsingItem()
         end,
     },
 	
@@ -377,11 +427,10 @@ local jutsu_variables =
 	{
 ----- INFINITE TSUKUYOMI JUTSU -----
         name = "infinitedream",
-		chakra = 90,
+		chakra = 110,
 		strings = { use = TUNING.INFINITEDREAM.USE },
 		tags = { "globalsleep", "utility" },
 		hauntable = true,
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, haunter, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -401,7 +450,8 @@ local jutsu_variables =
 				valid = true
 			end
 
-			if valid then		
+			if valid then
+			ninja.components.chakra:UseAmount(jv.chakra)
 				for k,target in pairs(Ents) do
 					if (TheNet:GetPVPEnabled() or not target:HasTag("player")) then
 						if target.components.sleeper ~= nil then
@@ -416,15 +466,8 @@ local jutsu_variables =
 					end
 				end
 			end
-			
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
-				if ninja then
-					ninja.components.chakra:UseAmount(jv.chakra)
-				end
-			else
 				jutsu.components.useableitem:StopUsingItem()
-			end
+			
         end,
     },
 	
@@ -468,7 +511,6 @@ local jutsu_variables =
 		strings = { use = TUNING.CREATIONREBIRTH.USE , nobenefit = TUNING.CREATIONREBIRTH.NOBENEFIT},
 		tags = { "healing", "medical" },
 		penalty = TUNING.HEART_HEALTH_PENALTY,
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -492,7 +534,6 @@ local jutsu_variables =
 			end
 
 			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
 				ninja.components.chakra:UseAmount(jv.chakra)
 				ninja.components.health:DeltaPenalty(jv.penalty)
 			else
@@ -505,7 +546,7 @@ local jutsu_variables =
 ----- MITOTIC REGENERATION - STRENGTH OF A 100 JUTSU -----
         name = "creationrebirth100",
 		chakra = 5,
-		health = 5,
+		health = 2,
 		timeper = 2.5,
 		strings = { use = TUNING.CREATIONREBIRTH100.USE, stopuse = TUNING.CREATIONREBIRTH100.STOPUSE },
 		tags = { "regeneration", "medical" },
@@ -620,7 +661,6 @@ local jutsu_variables =
 		chakra = 55,
 		strings = { use = TUNING.MULTIMUDWALL.USE, noland = TUNING.MULTIMUDWALL.NOLAND },
 		tags = { "defence", "utility" },
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -673,19 +713,15 @@ local jutsu_variables =
 				consumejutsu = false
 			end
 
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
 				ninja.components.chakra:UseAmount(jv.chakra)
-			else
 				jutsu.components.useableitem:StopUsingItem()
-			end
         end,
     },
 
 	{
 ----- WATER PISTOL JUTSU -----
         name = "watergun",
-		chakra = 35,
+		chakra = 25,
 		strings = { use = TUNING.WATERGUN.USE, groupuse = TUNING.WATERGUN.GROUPUSE },
 		tags = { "damage", "water", "extinguisher" },
 		weapon = { dmg = 35,  atkrng = 14,  hitrng = 16, proj = "watergun_projectile" },
@@ -745,11 +781,10 @@ local jutsu_variables =
 	{
 ----- EXPANSION JUTSU -----
         name = "expansion",
-		chakra = 40,
+		chakra = 70,
 		strings = { use = TUNING.EXPANSION.USE, cooldown = TUNING.EXPANSION.COOLDOWN, wolfgang = TUNING.EXPANSION.WOLFGANG },
 		tags = { "strength", "boost" },
 		size = {duration = 20, cooldown = 25},
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -763,7 +798,7 @@ local jutsu_variables =
 					ninja.onsizecooldown = jv.size.cooldown
 					local nx, ny, nz = ninja.Transform:GetScale()
 					sizechange(ninja, {nx, ny, nz}, nx/4, {nx*2, ny*2, nz*2}, .25, 0.25)
-					
+					ninja.components.chakra:UseAmount(jv.chakra)
 					ninja:DoTaskInTime(jv.size.duration, function() sizechange(ninja, {nx*2, ny*2, nz*2}, -nx/4, {nx, ny, nz}, .25, -0.25) end)	
 					ninja:DoTaskInTime(ninja.onsizecooldown, function() ninja.onsizecooldown = nil end)		
 				else
@@ -775,23 +810,19 @@ local jutsu_variables =
 				consumejutsu = false
 			end
 
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
-				ninja.components.chakra:UseAmount(jv.chakra)
-			else
+				
 				jutsu.components.useableitem:StopUsingItem()
-			end
+			
         end,
     },
 	
 	{
 ----- SUPER EXPANSION JUTSU -----
         name = "superexpansion",
-		chakra = 65,
+		chakra = 90,
 		strings = { use = TUNING.SUPEREXPANSION.USE, cooldown = TUNING.EXPANSION.COOLDOWN, wolfgang = TUNING.EXPANSION.WOLFGANG },
 		tags = { "strength", "boost" },
 		size = {duration = 20, cooldown = 30},
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -805,7 +836,7 @@ local jutsu_variables =
 					ninja.onsizecooldown = jv.size.cooldown
 					local nx, ny, nz = ninja.Transform:GetScale()
 					sizechange(ninja, {nx, ny, nz}, nx/2, {nx*3, ny*3, nz*3}, .25, 0.5)
-					
+					ninja.components.chakra:UseAmount(jv.chakra)
 					ninja:DoTaskInTime(jv.size.duration, function() sizechange(ninja, {nx*3, ny*3, nz*3}, -nx/2, {nx, ny, nz}, .25, -0.5) end)	
 					ninja:DoTaskInTime(ninja.onsizecooldown, function() ninja.onsizecooldown = nil end)		
 				else
@@ -817,19 +848,15 @@ local jutsu_variables =
 				consumejutsu = false
 			end
 
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
-				ninja.components.chakra:UseAmount(jv.chakra)
-			else
 				jutsu.components.useableitem:StopUsingItem()
-			end
+			
         end,
     },
 	
 	{
 ----- DEEP FOREST EMERGENCE JUTSU -----
         name = "deepforestemergence",
-		chakra = 85,
+		chakra = 99,
 		strings = { use = TUNING.DEEPFORESTEMERGENCE.USE, nograss = TUNING.DEEPFORESTEMERGENCE.NOGRASS },
 		tags = { "nature", "utility" },
         onuse = function(jutsu, ninja)
@@ -1022,10 +1049,9 @@ local jutsu_variables =
 	{
 ----- BUBBLE JUTSU -----
         name = "bubble",
-		chakra = 40,
+		chakra = 80,
 		strings = { use = TUNING.BUBBLE.USE },
 		tags = { "explosive", "water"},
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -1034,6 +1060,7 @@ local jutsu_variables =
 			local consumejutsu = true
 			
 			if canuse then
+			    ninja.components.chakra:UseAmount(jv.chakra)
 				ninja.components.talker:Say(jv.strings.use)
 				for i=1, 6, 1 do
 					ninja:DoTaskInTime(math.random(), 
@@ -1045,13 +1072,8 @@ local jutsu_variables =
 				ninja.components.talker:Say(jutsu.nochakra)
 				consumejutsu = false
 			end
-
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
-				ninja.components.chakra:UseAmount(jv.chakra)
-			else
+				
 				jutsu.components.useableitem:StopUsingItem()
-			end
         end,
     },
 	
@@ -1061,7 +1083,6 @@ local jutsu_variables =
 		chakra = 20, -- percentage of chakra used per clone
 		strings = { use = TUNING.SHADOWCLONE.USE, limit = TUNING.SHADOWCLONE.LIMIT },
 		tags = { "utility", "support" },
-		stacksize = TUNING.STACK_SIZE_LARGEITEM,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
@@ -1071,6 +1092,8 @@ local jutsu_variables =
 			local consumejutsu = true
 			
 			if canuse then
+			ninja.components.chakra:PenaltyDelta(chakra20percent)
+			ninja.components.hunger:DoDelta(-20)
 				ninja.components.talker:Say(jv.strings.use)
 				if ninja.clones == nil then
 					ninja.clones = 1
@@ -1087,13 +1110,8 @@ local jutsu_variables =
 				ninja.components.talker:Say(jv.strings.limit)
 				consumejutsu = false
 			end
-
-			if consumejutsu and not HasInfiniteChakra then
-				depletejutsu(jutsu, ninja)
-				ninja.components.chakra:PenaltyDelta(chakra20percent)
-			else
+				
 				jutsu.components.useableitem:StopUsingItem()
-			end
         end,
     },
 }

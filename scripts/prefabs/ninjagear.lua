@@ -67,26 +67,43 @@ local function commonfn(anim, atlas)
 	inst.components.equippable:SetOnEquip(function(inst, owner) 
 		owner.AnimState:OverrideSymbol("swap_hat", anim, "swap_hat")
 		owner.AnimState:Show("HAT")
+		if owner:HasTag("madara") then
+			owner.components.chakra.max = 250 else
+			if owner:HasTag("deidara") then
+				owner.components.chakra.max = 200 else
+				owner.components.chakra.max = 150
+			end
+		end
 		chakrachange(inst, owner, 2)
 	end)
 	
     inst.components.equippable:SetOnUnequip(function(inst, owner) 
 		owner.AnimState:Hide("HAT")
+			if owner:HasTag("madara") then
+				owner.components.chakra.max = 200 else
+				if owner:HasTag("deidara") then
+					owner.components.chakra.max = 150 else
+					owner.components.chakra.max = 100
+				end
+			end
 		chakrachange(inst, owner, 1)
 	end)
 	
     inst:AddComponent("inspectable")
+	
+	inst:AddComponent("armor")
+        inst.components.armor:InitCondition(750, .80)
 	
     return inst
 end
 
 ---------PREFAB FUNCTIONS---------
 
-local function classicheadband()
+local function headbandblackmissing()
     local inst = commonfn("headband", "headband")
 	
     return inst
 end
 
-return Prefab("classicheadband", classicheadband, assets)
+return Prefab("headbandblackmissing", headbandblackmissing, assets)
 	

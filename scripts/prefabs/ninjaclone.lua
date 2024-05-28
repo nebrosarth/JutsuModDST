@@ -250,7 +250,6 @@ local function PeriodicChecks(inst)
 				IsOverheating(inst) or
 				IsFreezing(inst) or 
 				clonemaker.components.health:GetPercent() < .15 or
-				inst.components.chakra:GetPercent() < .1 or 
 				newbuild == "werebeaver_build" or
 				getplayer(inst) == -1 then
 				
@@ -419,7 +418,7 @@ local function clonemain()
 	inst:AddComponent("combat")
     inst.components.combat:SetDefaultDamage(TUNING.UNARMED_DAMAGE)
     --inst.components.combat.GetGiveUpString = giveupstring
-    --inst.components.combat.GetBattleCryString = battlecrystring
+    --inst.components.combat.GetbattleCryString = battlecrystring
     inst.components.combat.hiteffectsymbol = "torso"
 	inst.components.combat:SetAttackPeriod(TUNING.SHADOWWAXWELL_ATTACK_PERIOD)
     inst.components.combat:SetRange(2)
