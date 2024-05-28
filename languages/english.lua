@@ -250,3 +250,51 @@ TUNING.NINJACLONE =
 }
 
 TUNING.CHAKRA = "Chakra"--Ingredient Name
+
+TUNING.NARUTO = 
+{
+	NAME = "Naruto",
+
+	CHARACTER_TITLES = "Naruto",
+	CHARACTER_NAMES = "Naruto",
+	CHARACTER_DESCRIPTIONS = "*Wears a protector\n*Loves to eat",
+	CHARACTER_QUOTES = "\"Someday I'll become Hokage!\"",
+
+	GENERIC = "This is Naruto!",
+	ATTACKER = "Naruto is agile...",
+	MURDERER = "Murderer!",
+	REVIVER = "Naruto, the ghost friend.",
+	GHOST = "Naruto could have used a heart."
+}
+
+TUNING.MADARA =
+{
+	NAME = "Madara",
+
+	CHARACTER_TITLES = "God of War",
+	CHARACTER_NAMES = "Madara",
+	CHARACTER_DESCRIPTIONS = "*Gets hungry faster\n*Strong in battle\n*Charming long hair",
+	CHARACTER_QUOTES = "\"Instant death.\"",
+
+	GENERIC = "Madara!",
+	ATTACKER = "Madara...",
+	MURDERER = "Murderer!",
+	REVIVER = "Madara, the ghost friend.",
+	GHOST = "Madara could have used a heart."
+}
+
+TUNING.DEIDARA =
+{
+	NAME = "Deidara",
+
+	CHARACTER_TITLES = "Deidara",
+	CHARACTER_NAMES = "Deidara",
+	CHARACTER_DESCRIPTIONS = "*Master of explosions\n*Eats explosive clay\n*Can create bombs",
+	CHARACTER_QUOTES = "\"Art is a bang!\"", 
+
+	GENERIC = "Deidara!",
+	ATTACKER = "Deidara is not that simple...",
+	MURDERER = "Murderer!",
+	REVIVER = "Deidara, the ghost friend.",
+	GHOST = "Deidara could have used a heart."
+}

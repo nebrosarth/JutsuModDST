@@ -658,25 +658,25 @@ local RECIPETABS 	= GLOBAL.RECIPETABS
 local TECH 			= GLOBAL.TECH
 
 -- The character select screen lines
-STRINGS.CHARACTER_TITLES.naruto = "Наруто"
-STRINGS.CHARACTER_NAMES.naruto = "Наруто"
-STRINGS.CHARACTER_DESCRIPTIONS.naruto = "*Носит протектор\n*Любит поесть"
-STRINGS.CHARACTER_QUOTES.naruto = "\"Однажды я стану Хокаге!\""
+STRINGS.CHARACTER_TITLES.naruto = TUNING.NARUTO.CHARACTER_TITLES
+STRINGS.CHARACTER_NAMES.naruto = TUNING.NARUTO.CHARACTER_NAMES
+STRINGS.CHARACTER_DESCRIPTIONS.naruto = TUNING.NARUTO.CHARACTER_DESCRIPTIONS
+STRINGS.CHARACTER_QUOTES.naruto = TUNING.NARUTO.CHARACTER_QUOTES
 
 -- Custom speech strings
 STRINGS.CHARACTERS.NARUTO = require "speech_naruto"
 
 -- The character's name as appears in-game 
-STRINGS.NAMES.NARUTO = "Наруто"
+STRINGS.NAMES.NARUTO = TUNING.NARUTO.NAME
 
 -- The default responses of examining the character
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.NARUTO = 
 {
-	GENERIC = "Это Наруто!",
-	ATTACKER = "Наруто ловкий...",
-	MURDERER = "Убийца!",
-	REVIVER = "Наруто, друг приведений.",
-	GHOST = "Наруто мог бы использовать сердце."
+	GENERIC = TUNING.NARUTO.GENERIC,
+	ATTACKER = TUNING.NARUTO.ATTACKER,
+	MURDERER = TUNING.NARUTO.MURDERER,
+	REVIVER = TUNING.NARUTO.REVIVER,
+	GHOST = TUNING.NARUTO.GHOST
 }
 
 AddMinimapAtlas("images/map_icons/naruto.xml")
@@ -688,25 +688,25 @@ AddModCharacter("naruto", "MALE")
 GLOBAL.CONTROLS = nil
 
 -- The character select screen lines
-STRINGS.CHARACTER_TITLES.madara = "Бог Войны"
-STRINGS.CHARACTER_NAMES.madara = "Мадара"
-STRINGS.CHARACTER_DESCRIPTIONS.madara = "*Голодает быстрее\n*Силён в бою\n*Очаровательные длинные волосы"
-STRINGS.CHARACTER_QUOTES.madara = "\"Мгновенная смерть.\""
+STRINGS.CHARACTER_TITLES.madara = TUNING.MADARA.CHARACTER_TITLES
+STRINGS.CHARACTER_NAMES.madara = TUNING.MADARA.CHARACTER_NAMES
+STRINGS.CHARACTER_DESCRIPTIONS.madara = TUNING.MADARA.CHARACTER_DESCRIPTIONS
+STRINGS.CHARACTER_QUOTES.madara = TUNING.MADARA.CHARACTER_QUOTES
 
 -- Custom speech strings
 STRINGS.CHARACTERS.MADARA = require "speech_madara"
 
 -- The character's name as appears in-game 
-STRINGS.NAMES.madara = "Мадара"
+STRINGS.NAMES.madara = TUNING.MADARA.NAME
 
 -- The default responses of examining the character
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MADARA = 
 {
-	GENERIC = "Мадара!",
-	ATTACKER = "Мадара...",
-	MURDERER = "Убийца!",
-	REVIVER = "Мадара, друг приведений.",
-	GHOST = "Мадара мог бы использовать сердце."
+	GENERIC = TUNING.MADARA.GENERIC,
+	ATTACKER = TUNING.MADARA.ATTACKER,
+	MURDERER = TUNING.MADARA.MURDERER,
+	REVIVER = TUNING.MADARA.REVIVER,
+	GHOST = TUNING.MADARA.GHOST
 }
 
 AddMinimapAtlas("images/map_icons/madara.xml")
@@ -715,25 +715,25 @@ AddMinimapAtlas("images/map_icons/madara.xml")
 AddModCharacter("madara", "MALE")
 
 -- The character select screen lines
-STRINGS.CHARACTER_TITLES.deidara = "Дейдара"
-STRINGS.CHARACTER_NAMES.deidara = "Дейдара"
-STRINGS.CHARACTER_DESCRIPTIONS.deidara = "*Мастер взрывов\n*Ест взрывную глину\n*Умеет создавать бомбы"
-STRINGS.CHARACTER_QUOTES.deidara = "\"Искусство — это одна вспышка света,искусство — это ВЗРЫВ!!!!\""
+STRINGS.CHARACTER_TITLES.deidara = TUNING.DEIDARA.CHARACTER_TITLES
+STRINGS.CHARACTER_NAMES.deidara = TUNING.DEIDARA.CHARACTER_NAMES
+STRINGS.CHARACTER_DESCRIPTIONS.deidara = TUNING.DEIDARA.CHARACTER_DESCRIPTIONS
+STRINGS.CHARACTER_QUOTES.deidara = TUNING.DEIDARA.CHARACTER_QUOTES
 
 -- Custom speech strings
 STRINGS.CHARACTERS.DEIDARA = require "speech_deidara"
 
 -- The character's name as appears in-game 
-STRINGS.NAMES.DEIDARA = "Дейдара"
+STRINGS.NAMES.DEIDARA = TUNING.DEIDARA.NAME
 
 -- The default responses of examining the character
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.DEIDARA = 
 {
-	GENERIC = "Дейдара!",
-	ATTACKER = "Дейдара не так прост...",
-	MURDERER = "Убийца!",
-	REVIVER = "Дейдара, друг приведений.",
-	GHOST = "Дейдара мог бы использовать сердце."
+	GENERIC = TUNING.DEIDARA.GENERIC,
+	ATTACKER = TUNING.DEIDARA.ATTACKER,
+	MURDERER = TUNING.DEIDARA.MURDERER,
+	REVIVER = TUNING.DEIDARA.REVIVER,
+	GHOST = TUNING.DEIDARA.GHOST
 }
 
 AddMinimapAtlas("images/map_icons/deidara.xml")

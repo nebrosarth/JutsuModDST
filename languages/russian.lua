@@ -249,3 +249,51 @@ TUNING.NINJACLONE =
 }
 
 TUNING.CHAKRA = "Чакра"--Ingredient Name
+
+TUNING.NARUTO = 
+{
+	NAME = "Наруто",
+
+	CHARACTER_TITLES = "Наруто",
+	CHARACTER_NAMES = "Наруто",
+	CHARACTER_DESCRIPTIONS = "*Носит протектор\n*Любит поесть",
+	CHARACTER_QUOTES = "\"Однажды я стану Хокаге!\"",
+
+	GENERIC = "Это Наруто!",
+	ATTACKER = "Наруто ловкий...",
+	MURDERER = "Убийца!",
+	REVIVER = "Наруто, друг приведений.",
+	GHOST = "Наруто мог бы использовать сердце."
+}
+
+TUNING.MADARA =
+{
+	NAME = "Мадара",
+
+	CHARACTER_TITLES = "Бог Войны",
+	CHARACTER_NAMES = "Мадара",
+	CHARACTER_DESCRIPTIONS = "*Голодает быстрее\n*Силён в бою\n*Очаровательные длинные волосы",
+	CHARACTER_QUOTES = "\"Мгновенная смерть.\"",
+
+	GENERIC = "Мадара!",
+	ATTACKER = "Мадара...",
+	MURDERER = "Убийца!",
+	REVIVER = "Мадара, друг приведений.",
+	GHOST = "Мадара мог бы использовать сердце."
+}
+
+TUNING.DEIDARA =
+{
+	NAME = "Дейдара",
+
+	CHARACTER_TITLES = "Дейдара",
+	CHARACTER_NAMES = "Дейдара",
+	CHARACTER_DESCRIPTIONS = "*Мастер взрывов\n*Ест взрывную глину\n*Умеет создавать бомбы",
+	CHARACTER_QUOTES = "\"Искусство — это одна вспышка света, искусство — это ВЗРЫВ!!!!\"",
+
+	GENERIC = "Дейдара!",
+	ATTACKER = "Дейдара не так прост...",
+	MURDERER = "Убийца!",
+	REVIVER = "Дейдара, друг приведений.",
+	GHOST = "Дейдара мог бы использовать сердце."
+}
