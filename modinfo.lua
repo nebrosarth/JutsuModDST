@@ -1,7 +1,7 @@
-name = "Jutsu Mod Russian"
+name = "Jutsu Mod"
 description = "chakra and jutsu"
 author = "nebrosarth"
-version = "28"
+version = "29"
 
 forumthread = ""
 
@@ -22,10 +22,12 @@ configuration_options =
 		name = "language",
 		label = "Language",
 		options =	{
-						{description = "Russian", data = "russian"}
+						{description = "Russian", data = "russian"},
+						{description = "English", data = "english"},
+						{description = "Chinese", data = "chinese"}
 					},
 
-		default = "russian",
+		default = "english",
 	
 	},
     
