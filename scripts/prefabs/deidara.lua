@@ -38,8 +38,13 @@ local prefabs = {}
 
 -- Custom starting items
 local start_inv = {
- "bubble"
+ "bubble",
+ "clay"
 }
+
+TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT.DEIDARA = start_inv
+TUNING.STARTING_ITEM_IMAGE_OVERRIDE["bubble"] = {atlas = "images/inventoryimages/scroll.xml", image = "scroll.tex"}
+TUNING.STARTING_ITEM_IMAGE_OVERRIDE["clay"] =   {atlas = "images/inventoryimages/clay.xml"}
 
 -- When the character is revived from human
 local function onbecamehuman(inst)
@@ -114,9 +119,9 @@ local function master_postinit(inst)
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
 	
 	-- Stats	
-	inst.components.health:SetMaxHealth(150)
-	inst.components.hunger:SetMax(130)
-	inst.components.sanity:SetMax(200)
+	inst.components.health:SetMaxHealth(TUNING.DEIDARA_HEALTH)
+	inst.components.hunger:SetMax(TUNING.DEIDARA_HUNGER)
+	inst.components.sanity:SetMax(TUNING.DEIDARA_SANITY)
 
 	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1

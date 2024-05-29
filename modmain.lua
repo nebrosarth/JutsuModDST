@@ -14,6 +14,10 @@ else
 	end
 end
 
+GLOBAL.setmetatable(env, {
+    __index = function(t, k) return GLOBAL.rawget(GLOBAL, k) end
+})
+
 _G = GLOBAL
 
 PrefabFiles = 
@@ -657,19 +661,22 @@ local Ingredient 	= GLOBAL.Ingredient
 local RECIPETABS 	= GLOBAL.RECIPETABS
 local TECH 			= GLOBAL.TECH
 
--- The character select screen lines
+GLOBAL.CONTROLS = nil
+
+-- NARUTO
 STRINGS.CHARACTER_TITLES.naruto = TUNING.NARUTO.CHARACTER_TITLES
 STRINGS.CHARACTER_NAMES.naruto = TUNING.NARUTO.CHARACTER_NAMES
 STRINGS.CHARACTER_DESCRIPTIONS.naruto = TUNING.NARUTO.CHARACTER_DESCRIPTIONS
 STRINGS.CHARACTER_QUOTES.naruto = TUNING.NARUTO.CHARACTER_QUOTES
 
--- Custom speech strings
+TUNING.NARUTO_HUNGER = 130
+TUNING.NARUTO_HEALTH = 130
+TUNING.NARUTO_SANITY = 130
+
 STRINGS.CHARACTERS.NARUTO = require "speech_naruto"
 
--- The character's name as appears in-game 
 STRINGS.NAMES.NARUTO = TUNING.NARUTO.NAME
 
--- The default responses of examining the character
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.NARUTO = 
 {
 	GENERIC = TUNING.NARUTO.GENERIC,
@@ -685,21 +692,20 @@ AddMinimapAtlas("images/map_icons/naruto.xml")
 AddModCharacter("naruto", "MALE")
 
 
-GLOBAL.CONTROLS = nil
-
--- The character select screen lines
+-- MADARA
 STRINGS.CHARACTER_TITLES.madara = TUNING.MADARA.CHARACTER_TITLES
 STRINGS.CHARACTER_NAMES.madara = TUNING.MADARA.CHARACTER_NAMES
 STRINGS.CHARACTER_DESCRIPTIONS.madara = TUNING.MADARA.CHARACTER_DESCRIPTIONS
 STRINGS.CHARACTER_QUOTES.madara = TUNING.MADARA.CHARACTER_QUOTES
 
--- Custom speech strings
+TUNING.MADARA_HUNGER = 150
+TUNING.MADARA_HEALTH = 200
+TUNING.MADARA_SANITY = 200
+
 STRINGS.CHARACTERS.MADARA = require "speech_madara"
 
--- The character's name as appears in-game 
 STRINGS.NAMES.madara = TUNING.MADARA.NAME
 
--- The default responses of examining the character
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MADARA = 
 {
 	GENERIC = TUNING.MADARA.GENERIC,
@@ -711,22 +717,22 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.MADARA =
 
 AddMinimapAtlas("images/map_icons/madara.xml")
 
--- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("madara", "MALE")
 
--- The character select screen lines
+-- DEIDARA
 STRINGS.CHARACTER_TITLES.deidara = TUNING.DEIDARA.CHARACTER_TITLES
 STRINGS.CHARACTER_NAMES.deidara = TUNING.DEIDARA.CHARACTER_NAMES
 STRINGS.CHARACTER_DESCRIPTIONS.deidara = TUNING.DEIDARA.CHARACTER_DESCRIPTIONS
 STRINGS.CHARACTER_QUOTES.deidara = TUNING.DEIDARA.CHARACTER_QUOTES
 
--- Custom speech strings
+TUNING.DEIDARA_HUNGER = 150
+TUNING.DEIDARA_HEALTH = 130
+TUNING.DEIDARA_SANITY = 200
+
 STRINGS.CHARACTERS.DEIDARA = require "speech_deidara"
 
--- The character's name as appears in-game 
 STRINGS.NAMES.DEIDARA = TUNING.DEIDARA.NAME
 
--- The default responses of examining the character
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.DEIDARA = 
 {
 	GENERIC = TUNING.DEIDARA.GENERIC,

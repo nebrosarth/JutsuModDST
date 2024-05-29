@@ -32,7 +32,8 @@ local assets = {
         Asset( "ANIM", "anim/beard.zip" ),
 
         Asset( "ANIM", "anim/naruto.zip" ),
-        Asset( "ANIM", "anim/ghost_naruto_build.zip" )
+        Asset( "ANIM", "anim/ghost_naruto_build.zip" ),
+        Asset("ATLAS", "images/inventoryimages/headband_leaf.xml"),
 }
 local prefabs = {}
 
@@ -40,6 +41,9 @@ local prefabs = {}
 local start_inv = {
  "HEADBANDBLUE"
 }
+
+TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT.NARUTO = start_inv
+TUNING.STARTING_ITEM_IMAGE_OVERRIDE["HEADBANDBLUE"] = {atlas = "images/inventoryimages/headband_leaf.xml", image = "headband_leaf.tex" }
 
 -- When the character is revived from human
 local function onbecamehuman(inst)
@@ -114,9 +118,9 @@ local function master_postinit(inst)
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
 	
 	-- Stats	
-	inst.components.health:SetMaxHealth(130)
-	inst.components.hunger:SetMax(130)
-	inst.components.sanity:SetMax(130)
+	inst.components.health:SetMaxHealth(TUNING.NARUTO_HEALTH)
+	inst.components.hunger:SetMax(TUNING.NARUTO_HUNGER)
+	inst.components.sanity:SetMax(TUNING.NARUTO_SANITY)
 	
 	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1

@@ -50,10 +50,9 @@ local master_postinit = function(inst)
 	-- Uncomment if "wathgrithr"(Wigfrid) or "webber" voice is used
     --inst.talker_path_override = "dontstarve_DLC001/characters/"
 	
-	-- Stats	
-	inst.components.health:SetMaxHealth(200)
-	inst.components.hunger:SetMax(150)
-	inst.components.sanity:SetMax(200)
+	inst.components.health:SetMaxHealth(TUNING.MADARA_HEALTH)
+	inst.components.hunger:SetMax(TUNING.MADARA_HUNGER)
+	inst.components.sanity:SetMax(TUNING.MADARA_SANITY)
 	
 	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1.2

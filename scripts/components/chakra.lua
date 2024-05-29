@@ -25,7 +25,9 @@ local function SetReplicaMaxChakra(self, maxchakra)
 end
 --[[The 2 functions(above and below) are Copyright ( c ) 2015 of Kzisor/Ysovuka	]]
 local function SetReplicaCurrentChakra(self, current)
-	self.inst.replica.chakra:SetCurrent(current)
+	if self.inst.replica.chakra ~= nil then
+		self.inst.replica.chakra:SetCurrent(current)
+	end
 end
 
 local function SetReplicaPenalty(self, penalty)
