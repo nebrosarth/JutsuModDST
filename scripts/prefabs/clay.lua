@@ -32,6 +32,15 @@ local function fn(Sim)
 	
 	-- Make it inspectable
 	inst:AddComponent("inspectable")
+
+	inst:AddComponent("edible")
+    inst.components.edible.foodtype = "CLAY"
+    inst.components.edible.healthvalue = 6
+    inst.components.edible.hungervalue = 30
+    inst.components.edible.sanityvalue = -10
+	inst.components.edible.oneaten = function(inst, eater) 
+		ConsoleCommandPlayer().components.chakra:UseAmount(-20)
+	end
 	
 	-- Make it an inventory item
 	inst:AddComponent("inventoryitem")

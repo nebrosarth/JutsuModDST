@@ -341,23 +341,24 @@ nil,nil,nil,nil,nil,
 "images/inventoryimages/armor.xml"
 )
 
+AddComponentPostInit("playerspawner", function(component)
+    local world = component.inst
+
+    world:ListenForEvent("ms_newplayercharacterspawned", function(_, data)
+        local player = data.player
+        if player and player.prefab == "deidara" and player.components.inventory then
+            local clay = GLOBAL.SpawnPrefab("clay")
+            if clay then
+                player.components.inventory:GiveItem(clay)
+            end
+        end
+    end)
+end)
+
 function AddMap(inst)
         local minimap = inst.entity:AddMiniMapEntity()
         minimap:SetIcon( inst.prefab .. ".tex" )
 end
-
-GetPlayer = GLOBAL.GetPlayer   
-AddPrefabPostInit("clay", function(inst)
-        if GetPlayer().prefab == "deidara" then
-            inst:AddComponent("edible")
-            inst.components.edible.foodtype = "VEGGIE"
-            inst.components.edible.healthvalue = 3
-            inst.components.edible.sanityvalue = 0
-            inst.components.edible.hungervalue = 20
-			ConsoleCommandPlayer().components.chakra:UseAmount(-20) 
-        end
-    end)
-
 
 AddPrefabPostInit("gears", AddMap)
 
@@ -743,6 +744,17 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.DEIDARA =
 }
 
 AddMinimapAtlas("images/map_icons/deidara.xml")
+
+local FOODTYPE = GLOBAL.FOODTYPE
+FOODTYPE.CLAY = "CLAY"
+
+AddComponentPostInit("eater", function(self)
+	function self:SetCanEatClay()
+		table.insert(self.preferseating, FOODTYPE.CLAY)
+		table.insert(self.caneat, FOODTYPE.CLAY)
+		self.inst:AddTag(FOODTYPE.CLAY.."_eater")
+	end
+end)
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("deidara", "MALE")

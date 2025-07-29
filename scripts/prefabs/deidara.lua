@@ -105,9 +105,6 @@ local function common_postinit(inst)
     inst:ListenForEvent("ms_playerleft", function(src, player) OnPlayerLeft(inst, player) end, TheWorld) -- http://forums.kleientertainment.com/topic/56400-player-logout-eventhook-name/#entry656494
 end
 
-
-
-
 -- This initializes for the server only. Components are added here.
 local function master_postinit(inst)
     inst:AddComponent("reader")
@@ -132,7 +129,10 @@ local function master_postinit(inst)
 	inst.OnLoad = OnLoad
     inst.OnNewSpawn = OnNewSpawn
 
-    
+    if inst.components.eater then
+        inst.components.eater:SetCanEatClay()
+    end
+
 end
 
 return MakePlayerCharacter("deidara", prefabs, assets, common_postinit, master_postinit, start_inv)
