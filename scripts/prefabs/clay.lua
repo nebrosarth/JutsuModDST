@@ -34,7 +34,7 @@ local function fn(Sim)
 	inst:AddComponent("inspectable")
 
 	inst:AddComponent("edible")
-    inst.components.edible.foodtype = "CLAY"
+    inst.components.edible.foodtype = FOODTYPE.MEAT
     inst.components.edible.healthvalue = 6
     inst.components.edible.hungervalue = 30
     inst.components.edible.sanityvalue = -10

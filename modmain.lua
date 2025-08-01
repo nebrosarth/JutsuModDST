@@ -751,15 +751,28 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.DEIDARA =
 
 AddMinimapAtlas("images/map_icons/deidara.xml")
 
-local FOODTYPE = GLOBAL.FOODTYPE
-FOODTYPE.CLAY = "CLAY"
-
 AddComponentPostInit("eater", function(self)
-	function self:SetCanEatClay()
-		table.insert(self.preferseating, FOODTYPE.CLAY)
-		table.insert(self.caneat, FOODTYPE.CLAY)
-		self.inst:AddTag(FOODTYPE.CLAY.."_eater")
-	end
+    local oldPref = self.PrefersToEat
+    function self:PrefersToEat(food, ...)
+        if food and food.prefab == "clay" then
+            local eater = self.inst
+            return eater.prefab == "deidara"
+                   or not eater:HasTag("player")
+        end
+        return oldPref(self, food, ...)
+    end
+
+    if self.CanEat ~= nil then
+        local oldCan = self.CanEat
+        function self:CanEat(food, ...)
+            if food and food.prefab == "clay" then
+                local eater = self.inst
+                return eater.prefab == "deidara"
+                       or not eater:HasTag("player")
+            end
+            return oldCan(self, food, ...)
+        end
+    end
 end)
 
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.

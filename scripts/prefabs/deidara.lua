@@ -129,10 +129,6 @@ local function master_postinit(inst)
 	inst.OnLoad = OnLoad
     inst.OnNewSpawn = OnNewSpawn
 
-    if inst.components.eater then
-        inst.components.eater:SetCanEatClay()
-    end
-
 end
 
 return MakePlayerCharacter("deidara", prefabs, assets, common_postinit, master_postinit, start_inv)

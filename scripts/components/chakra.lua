@@ -260,8 +260,8 @@ function Chakra:UseAmount(amount)
 		if amount < self.current then
 			self:DoDelta(-amount)
 		else
-			self:DoDelta(-self.current)
 			self.inst.components.sanity:DoDelta(self.current - amount)
+			self:DoDelta(-self.current)
 		end
 	end
 end

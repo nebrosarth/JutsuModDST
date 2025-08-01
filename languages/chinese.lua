@@ -28,7 +28,7 @@ TUNING.RINNEREBIRTH =
 {
 	NAME = "轮回天生卷轴",
 	RECIPE = "轮回眼轮回之力",
-	DESCRIBE = "复活每个死去的玩家",
+	DESCRIBE = "复活每个死去的玩家 (需要100查克拉)",
 	USE = "外道·轮回天生之术！",
 	NOGHOSTS = "没有人死亡，因此我决定不使用这个术",
 	USING = "正在使用轮回天生！"
@@ -38,7 +38,7 @@ TUNING.ICEROCKDOME =
 {
 	NAME = "冰岩穹顶卷轴",
 	RECIPE = "冰遁护体之力",
-	DESCRIBE = "将自己冰封一段时间来躲避攻击",
+	DESCRIBE = "将自己冰封一段时间来躲避攻击 (需要30查克拉)",
 	USE = "冰遁·冰岩堂无之术"
 }
 
@@ -46,7 +46,7 @@ TUNING.RASENGAN =
 {
 	NAME = "螺旋丸卷轴",
 	RECIPE = "查克拉之力",
-	DESCRIBE = "只在制作时需要查克拉，在查克拉较低时很有用",
+	DESCRIBE = "只在制作时需要查克拉，在查克拉较低时很有用 (需要20查克拉)",
 	USE = "螺旋丸！",
 	GROUPUSE = "螺旋多连丸！"
 }
@@ -55,7 +55,7 @@ TUNING.FIRERASENGAN =
 {
 	NAME = "豪炎螺旋丸卷轴",
 	RECIPE = "融合了火与查克拉的力量",
-	DESCRIBE = "只在制作时需要查克拉，在查克拉较低时很有用",
+	DESCRIBE = "只在制作时需要查克拉，在查克拉较低时很有用 (需要110查克拉)",
 	USE = "火遁·豪炎螺旋丸！",
 	GROUPUSE = "火遁·豪炎螺旋多连丸！"
 }
@@ -64,7 +64,7 @@ TUNING.INFINITEDREAM =
 {
 	NAME = "无限月读卷轴",
 	RECIPE = "轮回眼昏睡之力",
-	DESCRIBE = "在一段时间内催眠所有事物",
+	DESCRIBE = "在一段时间内催眠所有事物 (需要110查克拉)",
 	USE = "无限月读！"
 }
 
@@ -72,7 +72,7 @@ TUNING.MAKERAIN =
 {
 	NAME = "召唤雨水",
 	RECIPE = "自然之力",
-	DESCRIBE = "召唤雨水。",
+	DESCRIBE = "召唤雨水。(需要110查克拉)",
 	USE = "召唤雨水",
 	STOPUSE = "停止雨水"
 }
@@ -81,7 +81,7 @@ TUNING.STRENGTHOFA100 =
 {
 	NAME = "里封印卷轴",
 	RECIPE = "生命值上限惩罚恢复之力",
-	DESCRIBE = "移除一小部分的生命值上限惩罚",
+	DESCRIBE = "移除一小部分的生命值上限惩罚 (需要25查克拉)",
 	USE = "里封印！"
 }
 
@@ -89,7 +89,7 @@ TUNING.CREATIONREBIRTH =
 {
 	NAME = "创造再生卷轴",
 	RECIPE = "瞬间恢复之力",
-	DESCRIBE = "以少许生命值上限惩罚为代价恢复至满状态",
+	DESCRIBE = "以少许生命值上限惩罚为代价恢复至满状态 (需要50查克拉)",
 	USE = "忍法·创造再生",
 	NOBENEFIT = "使用这个术对我现在的健康状态没有好处……"
 }
@@ -98,7 +98,7 @@ TUNING.CREATIONREBIRTH100 =
 {
 	NAME = "创造再生·百豪之术卷轴",
 	RECIPE = "生命恢复之力",
-	DESCRIBE = "以查克拉为代价恢复生命值",
+	DESCRIBE = "以查克拉为代价恢复生命值 (需要5查克拉)",
 	USE = "忍法创造再生·百豪之术",
 	STOPUSE = "恢复中：忍法创造再生·百豪之术"
 }
@@ -107,7 +107,7 @@ TUNING.FLYINGRAIJIN =
 {
 	NAME = "飞雷神卷轴",
 	RECIPE = "瞬移之力",
-	DESCRIBE = "瞬移到你放置在这个世界的飞雷神苦无",
+	DESCRIBE = "瞬移到你放置在这个世界的飞雷神苦无 (需要10查克拉)",
 	USE = "飞雷神之术！",
 	NONE = "找不到能瞬移的飞雷神苦无"
 }
@@ -116,7 +116,7 @@ TUNING.MULTIMUDWALL =
 {
 	NAME = "多重土流壁卷轴",
 	RECIPE = "土遁护体之力",
-	DESCRIBE = "召唤四堵土墙阻挡任何东西进入，除非他们打破土墙",
+	DESCRIBE = "召唤四堵土墙阻挡任何东西进入，除非他们打破土墙 (需要55查克拉)",
 	USE = "土遁·多重土流壁之术",
 	NOLAND = "附近没有足够的泥土……"
 }
@@ -125,7 +125,7 @@ TUNING.WATERGUN =
 {
 	NAME = "水龙弹卷轴",
 	RECIPE = "水之力",
-	DESCRIBE = "对着火的目标造成额外伤害，有少许范围伤害并且会让目标变湿",
+	DESCRIBE = "对着火的目标造成额外伤害，有少许范围伤害并且会让目标变湿 (需要25查克拉)",
 	USE = "水遁·水铁炮！",
 	GROUPUSE = "水遁·多重水铁炮！"
 }
@@ -134,7 +134,7 @@ TUNING.EXPANSION =
 {
 	NAME = "倍化卷轴",
 	RECIPE = "倍化之力",
-	DESCRIBE = "使你变大，变强",
+	DESCRIBE = "使你变大，变强 (需要70查克拉)",
 	USE = "倍化之术！",
 	COOLDOWN = "无法使用倍化之术（冷却中）",
 	WOLFGANG = "沃尔夫冈不相信虚假的力量"
@@ -144,7 +144,7 @@ TUNING.SUPEREXPANSION =
 {
 	NAME = "超倍化卷轴",
 	RECIPE = "超倍化之力",
-	DESCRIBE = "使你变更大，变更强",
+	DESCRIBE = "使你变更大，变更强 (需要90查克拉)",
 	USE = "超倍化之术！"
 }
 
@@ -152,7 +152,7 @@ TUNING.DEEPFORESTEMERGENCE =
 {
 	NAME = "树界降临卷轴",
 	RECIPE = "自然生长之力",
-	DESCRIBE = "加快周围植物和农作物的生长速度",
+	DESCRIBE = "加快周围植物和农作物的生长速度 (需要100查克拉)",
 	USE = "木遁·树界降临！",
 	NOGRASS = "或许我应该更靠近草地"
 }
@@ -161,7 +161,7 @@ TUNING.BUBBLE =
 {
 	NAME = "泡沫卷轴",
 	RECIPE = "爆破泡泡之力",
-	DESCRIBE = "产生少量接触物体后或一段时间后爆炸的泡泡",
+	DESCRIBE = "产生少量接触物体后或一段时间后爆炸的泡泡 (需要80查克拉)",
 	USE = "水遁·泡沫之术！"
 }
 
@@ -169,7 +169,7 @@ TUNING.SHADOWCLONE =
 {
 	NAME = "影分身卷轴",
 	RECIPE = "影分身之力",
-	DESCRIBE = "产生使用者的复制体，只有使用者50%的最大生命值，并均分查克拉，从50开始",
+	DESCRIBE = "产生使用者的复制体，只有使用者50%的最大生命值，并均分查克拉，从50开始 (需要20%查克拉)",
 	USE = "影分身之术！", 
 	LIMIT = "我已经达到我的极限了！（允许的最低查克拉值上限）"
 }

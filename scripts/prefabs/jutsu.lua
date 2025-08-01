@@ -189,7 +189,7 @@ local jutsu_variables =
     {
 ----- RINNE REBIRTH JUTSU -----
         name = "rinnerebirth",
-		chakra = 99,
+		chakra = 100,
 		health = 30,
 		strings = { use = TUNING.RINNEREBIRTH.USE, using = TUNING.RINNEREBIRTH.USING, noghosts = TUNING.RINNEREBIRTH.NOGHOSTS },
 		tags = {"globalreincarnation", "utility"},
@@ -320,59 +320,6 @@ local jutsu_variables =
     },
 	
 	{
------ MAKE RAIN JUTSU -----
-        name = "makerain",
-		chakra = 110,
-		strings = { use = TUNING.MAKERAIN.USE, stopuse = TUNING.MAKERAIN.STOPUSE },
-		tags = { "regeneration", "medical" },
-        onuse = function(jutsu, ninja)
-		local jv = jutsu.vars
-		ninja = jutsu.components.inventoryitem.owner or ninja
-		if not ninja.healingtask and not TheWorld.state.israining then
-		ninja.components.chakra:UseAmount(jv.chakra)
-		end
-		if ninja.healingtask and TheWorld.state.israining then
-		ninja.components.chakra:UseAmount(jv.chakra)
-		end
-			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
-			local canuse = true
-			local maxhp = ninja.components.health:GetMaxWithPenalty()
-			
-			if ninja.healingtask == nil then
-				ninja.healingtask = true
-			else
-				ninja.healingtask = not ninja.healingtask
-			end
-			
-			if ninja.healingtask and TheWorld.state.israining then
-			ninja.healingtask = not ninja.healingtask
-			end
-			
-			if ninja.healingtask and not TheWorld.state.israining then
-			TheWorld:PushEvent("ms_forceprecipitation")
-			end
-			if ninja.healingtask then -- if healing is on then
-				ninja.components.talker:Say(jv.strings.use)
-				TheNet:Announce(ninja.name .. ": " .. jv.strings.use)
-				ninja.healing =  function()
-					canuse = ninja.components.chakra:CheckEnough(jv.chakra)
-							
-				end
-				end
-			 if TheWorld.state.israining and not ninja.healingtask then
-			TheNet:Announce(ninja.name .. ": " .. jv.strings.stopuse)
-				ninja.components.talker:Say(jv.strings.stopuse)
-				 -- incase we end up here without the task being on somehow.
-					
-					TheWorld:PushEvent("ms_forceprecipitation", false)		
-				
-			end
-
-			jutsu.components.useableitem:StopUsingItem()
-        end,
-    },
-	
-	{
 ----- RASENGAN JUTSU -----
         name = "rasengan",
 		chakra = 20,
@@ -470,7 +417,60 @@ local jutsu_variables =
 			
         end,
     },
-	
+
+	{
+----- MAKE RAIN JUTSU -----
+        name = "makerain",
+		chakra = 110,
+		strings = { use = TUNING.MAKERAIN.USE, stopuse = TUNING.MAKERAIN.STOPUSE },
+		tags = { "regeneration", "medical" },
+        onuse = function(jutsu, ninja)
+		local jv = jutsu.vars
+		ninja = jutsu.components.inventoryitem.owner or ninja
+		if not ninja.healingtask and not TheWorld.state.israining then
+		ninja.components.chakra:UseAmount(jv.chakra)
+		end
+		if ninja.healingtask and TheWorld.state.israining then
+		ninja.components.chakra:UseAmount(jv.chakra)
+		end
+			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
+			local canuse = true
+			local maxhp = ninja.components.health:GetMaxWithPenalty()
+			
+			if ninja.healingtask == nil then
+				ninja.healingtask = true
+			else
+				ninja.healingtask = not ninja.healingtask
+			end
+			
+			if ninja.healingtask and TheWorld.state.israining then
+			ninja.healingtask = not ninja.healingtask
+			end
+			
+			if ninja.healingtask and not TheWorld.state.israining then
+			TheWorld:PushEvent("ms_forceprecipitation")
+			end
+			if ninja.healingtask then -- if healing is on then
+				ninja.components.talker:Say(jv.strings.use)
+				TheNet:Announce(ninja.name .. ": " .. jv.strings.use)
+				ninja.healing =  function()
+					canuse = ninja.components.chakra:CheckEnough(jv.chakra)
+							
+				end
+				end
+			 if TheWorld.state.israining and not ninja.healingtask then
+			TheNet:Announce(ninja.name .. ": " .. jv.strings.stopuse)
+				ninja.components.talker:Say(jv.strings.stopuse)
+				 -- incase we end up here without the task being on somehow.
+					
+					TheWorld:PushEvent("ms_forceprecipitation", false)		
+				
+			end
+
+			jutsu.components.useableitem:StopUsingItem()
+        end,
+    },
+
 	{
 ----- STRENGTH OF A 100 JUTSU -----
         name = "strengthofa100",
@@ -856,7 +856,7 @@ local jutsu_variables =
 	{
 ----- DEEP FOREST EMERGENCE JUTSU -----
         name = "deepforestemergence",
-		chakra = 99,
+		chakra = 100,
 		strings = { use = TUNING.DEEPFORESTEMERGENCE.USE, nograss = TUNING.DEEPFORESTEMERGENCE.NOGRASS },
 		tags = { "nature", "utility" },
         onuse = function(jutsu, ninja)
