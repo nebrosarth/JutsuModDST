@@ -111,6 +111,12 @@ Assets =
 	
 	Asset( "IMAGE", "images/names_madara.tex" ),
     Asset( "ATLAS", "images/names_madara.xml" ),
+
+	Asset( "IMAGE", "images/names_gold_deidara.tex" ),
+    Asset( "ATLAS", "images/names_gold_deidara.xml" ),
+
+	Asset( "IMAGE", "images/names_gold_naruto.tex" ),
+    Asset( "ATLAS", "images/names_gold_naruto.xml" ),
 	
     Asset( "IMAGE", "bigportraits/madara_none.tex" ),
     Asset( "ATLAS", "bigportraits/madara_none.xml" ),
