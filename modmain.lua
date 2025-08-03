@@ -161,6 +161,9 @@ STRINGS.NAMES.CLAY = "Взрывная глина"
 STRINGS.RECIPE_DESC.CLAY = "Смесь глины и чакры."
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.CLAY = "Смесь глины и чакры."
 
+STRINGS.ACTIONS.JUTSU_CAST = TUNING.USESTRINGS.JUTSU
+STRINGS.ACTIONS.JUTSU_TOGGLE = TUNING.USESTRINGS.TOGGLE
+
 STRINGS.NAMES.MAKERAIN = TUNING.MAKERAIN.NAME
 STRINGS.NAMES.RINNEREBIRTH = TUNING.RINNEREBIRTH.NAME
 STRINGS.NAMES.ICEROCKDOME = TUNING.ICEROCKDOME.NAME
@@ -483,7 +486,7 @@ AddPrefabPostInit("world", function(world)
     end)
 end)
 
-AddAction("CASTJUTSU_SCROLL", "Cast", function(act)
+AddAction("CASTJUTSU_SCROLL", STRINGS.ACTIONS.JUTSU_CAST, function(act)
 	local target = act.target or act.invobject
 	if target ~= nil and target.components.jutsu_scroll ~= nil then
 		target.components.jutsu_scroll:Cast()

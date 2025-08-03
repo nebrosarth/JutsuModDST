@@ -188,7 +188,7 @@ local jutsu_variables =
     {
 ----- RINNE REBIRTH JUTSU -----
         name = "rinnerebirth",
-		chakra = 100,
+		chakra = 150,
 		health = 30,
 		strings = { use = TUNING.RINNEREBIRTH.USE, using = TUNING.RINNEREBIRTH.USING, noghosts = TUNING.RINNEREBIRTH.NOGHOSTS },
 		tags = {"globalreincarnation", "utility"},
@@ -369,7 +369,7 @@ local jutsu_variables =
 	{
 ----- INFINITE TSUKUYOMI JUTSU -----
         name = "infinitedream",
-		chakra = 110,
+		chakra = 150,
 		strings = { use = TUNING.INFINITEDREAM.USE },
 		tags = { "globalsleep", "utility" },
 		hauntable = true,
@@ -414,7 +414,7 @@ local jutsu_variables =
 	{
 ----- MAKE RAIN JUTSU -----
         name = "makerain",
-		chakra = 110,
+		chakra = 150,
 		strings = { use = TUNING.MAKERAIN.USE, stopuse = TUNING.MAKERAIN.STOPUSE },
 		tags = { "regeneration", "medical" },
         onuse = function(jutsu, ninja)

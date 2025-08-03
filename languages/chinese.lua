@@ -28,7 +28,7 @@ TUNING.RINNEREBIRTH =
 {
 	NAME = "轮回天生卷轴",
 	RECIPE = "轮回眼轮回之力",
-	DESCRIBE = "复活每个死去的玩家 (需要100查克拉)",
+	DESCRIBE = "复活每个死去的玩家 (需要150查克拉)",
 	USE = "外道·轮回天生之术！",
 	NOGHOSTS = "没有人死亡，因此我决定不使用这个术",
 	USING = "正在使用轮回天生！"
@@ -55,7 +55,7 @@ TUNING.FIRERASENGAN =
 {
 	NAME = "豪炎螺旋丸卷轴",
 	RECIPE = "融合了火与查克拉的力量",
-	DESCRIBE = "只在制作时需要查克拉，在查克拉较低时很有用 (需要110查克拉)",
+	DESCRIBE = "只在制作时需要查克拉，在查克拉较低时很有用 (需要35查克拉)",
 	USE = "火遁·豪炎螺旋丸！",
 	GROUPUSE = "火遁·豪炎螺旋多连丸！"
 }
@@ -64,7 +64,7 @@ TUNING.INFINITEDREAM =
 {
 	NAME = "无限月读卷轴",
 	RECIPE = "轮回眼昏睡之力",
-	DESCRIBE = "在一段时间内催眠所有事物 (需要110查克拉)",
+	DESCRIBE = "在一段时间内催眠所有事物 (需要150查克拉)",
 	USE = "无限月读！"
 }
 
@@ -72,7 +72,7 @@ TUNING.MAKERAIN =
 {
 	NAME = "召唤雨水",
 	RECIPE = "自然之力",
-	DESCRIBE = "召唤雨水。(需要110查克拉)",
+	DESCRIBE = "召唤雨水。(需要150查克拉)",
 	USE = "召唤雨水",
 	STOPUSE = "停止雨水"
 }

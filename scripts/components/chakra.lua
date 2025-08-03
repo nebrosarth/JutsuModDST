@@ -257,11 +257,22 @@ end
 
 function Chakra:UseAmount(amount)
 	if not self.infinite then
-		if amount < self.current then
-			self:DoDelta(-amount)
-		else
-			self.inst.components.sanity:DoDelta(self.current - amount)
-			self:DoDelta(-self.current)
+		local penalty = self.current - amount
+		self:DoDelta(-amount)
+		if penalty < 0 then
+			local current_sanity = self.inst.components.sanity and self.inst.components.sanity.current or 0
+			self.inst.components.sanity:DoDelta(penalty)
+			if current_sanity <= -penalty then
+				penalty = penalty + current_sanity
+				local current_hunger = self.inst.components.hunger and self.inst.components.hunger.current or 0
+				self.inst.components.hunger:DoDelta(penalty)
+				if current_hunger <= -penalty then
+					penalty = penalty + current_hunger
+					if self.inst.components.health ~= nil then
+						self.inst.components.health:DoDelta(penalty, nil, "chakra")
+					end
+				end
+			end
 		end
 	end
 end

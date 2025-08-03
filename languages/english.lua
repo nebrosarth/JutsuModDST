@@ -28,7 +28,7 @@ TUNING.RINNEREBIRTH =
 { 
 	NAME = "Rinne Rebirth Scroll",
 	RECIPE = "Power of Global Resurrection",
-	DESCRIBE = "Revive every dead player (100 chakra)",
+	DESCRIBE = "Revive every dead player (150 chakra)",
 	USE = "Gedo Art of Rinne Rebirth Jutsu!",
 	NOGHOSTS = "No one is dead, so I decide to not use the Jutsu.",
 	USING = " using Rinne Rebirth!" 
@@ -64,7 +64,7 @@ TUNING.INFINITEDREAM =
 { 
 	NAME = "Infinite Tsukuyomi Scroll",
 	RECIPE = "Power of Sleeping Genjutsu",
-	DESCRIBE = "Puts everything to sleep for a short period of time (110 chakra)",
+	DESCRIBE = "Puts everything to sleep for a short period of time (150 chakra)",
 	USE = "Infinite Tsukuyomi!" 
 }
 
@@ -72,7 +72,7 @@ TUNING.MAKERAIN =
 { 
 	NAME = "Rain Summon",
 	RECIPE = "Power of Nature",
-	DESCRIBE = "Summons rain (110 chakra)",
+	DESCRIBE = "Summons rain (150 chakra)",
 	USE = "Rain Summon",
 	STOPUSE = "Stop Rain"
 }
