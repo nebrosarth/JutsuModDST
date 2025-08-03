@@ -228,8 +228,10 @@ local function PeriodicChecks(inst)
 						inst.hand.components.projectile:SetOnHitFn(function(proj) proj:Remove() end)
 					end
 					
-					inst.brain:Stop()
-					inst.brain:Start()
+					if inst.brain ~= nil then
+						inst.brain:Stop()
+						inst.brain:Start()
+					end
 				elseif inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS) == nil then
 					if inst.hand ~= nil and not inst.hand:HasTag("catchable") then -- should be nil but just incase
 						inst.hand:Remove()

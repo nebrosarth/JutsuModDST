@@ -471,7 +471,37 @@ for i, v in pairs(jr) do
 		AddRecipe(jr[i].item, {Ingredient(jr[i].ing1[1], jr[i].ing1[2], jr[i].ing1[3]), Ingredient(jr[i].ing2[1], jr[i].ing2[2], jr[i].ing2[3]), Ingredient(jr[i].ing3[1], jr[i].ing3[2], jr[i].ing3[3]) }, jr[i].tab, jr[i].tech, nil, nil, nil, nil, nil, jr[i].xml, jr[i].tex)
 	end
 end
-  
+
+local ACTIONS = GLOBAL.ACTIONS
+
+AddPrefabPostInit("world", function(world)
+    world:ListenForEvent("castjutsu_scroll_request", function(_, data)
+        local jutsu_scroll = data.jutsu_scroll
+        if jutsu_scroll and jutsu_scroll.components.jutsu_scroll then
+            jutsu_scroll.components.jutsu_scroll:Cast()
+        end
+    end)
+end)
+
+AddAction("CASTJUTSU_SCROLL", "Cast", function(act)
+	local target = act.target or act.invobject
+	if target ~= nil and target.components.jutsu_scroll ~= nil then
+		target.components.jutsu_scroll:Cast()
+	end
+	return true
+end)
+
+AddComponentAction("INVENTORY", "jutsu_scroll", function(inst, doer, actions, right)
+	table.insert(actions, ACTIONS.CASTJUTSU_SCROLL)
+end)
+
+local ActionHandler = GLOBAL.ActionHandler
+
+AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.CASTJUTSU_SCROLL, "book"))
+AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.CASTJUTSU_SCROLL, "book"))
+
+AddReplicableComponent("jutsu_scroll")
+
 local ChakraBadge = GLOBAL.require("widgets/chakrabadge")-- unneeded?
 
 AddReplicableComponent("chakra")

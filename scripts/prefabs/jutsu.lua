@@ -178,7 +178,6 @@ local function depletejutsu(jutsu, ninja)
 			autoequip(jutsu, ninja)
 		end
 	else
-		jutsu.components.useableitem:StopUsingItem()
 		jutsu.components.stackable:SetStackSize(jutsu.components.stackable:StackSize() - 1)
 	end
 end
@@ -268,8 +267,6 @@ local jutsu_variables =
 					end
 					ninja.components.chakra:UseAmount(jv.chakra)
 				end
-			else
-				jutsu.components.useableitem:StopUsingItem()
 			end
         end,
     },
@@ -314,8 +311,6 @@ local jutsu_variables =
 			else
 				consumejutsu = false
 			end
-			
-			jutsu.components.useableitem:StopUsingItem()
         end,
     },
 	
@@ -413,8 +408,6 @@ local jutsu_variables =
 					end
 				end
 			end
-				jutsu.components.useableitem:StopUsingItem()
-			
         end,
     },
 
@@ -466,8 +459,6 @@ local jutsu_variables =
 					TheWorld:PushEvent("ms_forceprecipitation", false)		
 				
 			end
-
-			jutsu.components.useableitem:StopUsingItem()
         end,
     },
 
@@ -498,8 +489,6 @@ local jutsu_variables =
 			if consumejutsu and not HasInfiniteChakra then
 				depletejutsu(jutsu, ninja)
 				ninja.components.chakra:UseAmount(jv.chakra)
-			else
-				jutsu.components.useableitem:StopUsingItem()
 			end
         end,
     },
@@ -536,8 +525,6 @@ local jutsu_variables =
 			if consumejutsu and not HasInfiniteChakra then
 				ninja.components.chakra:UseAmount(jv.chakra)
 				ninja.components.health:DeltaPenalty(jv.penalty)
-			else
-				jutsu.components.useableitem:StopUsingItem()
 			end
         end,
     },
@@ -581,8 +568,6 @@ local jutsu_variables =
 					ninja.healing:Cancel()
 				end
 			end
-
-			jutsu.components.useableitem:StopUsingItem()
         end,
     },
 
@@ -650,8 +635,6 @@ local jutsu_variables =
 					ninja.components.talker:Say(jutsu.nochakra)
 				end
 			end
-			
-			jutsu.components.useableitem:StopUsingItem()
         end,
     },
 	
@@ -714,7 +697,6 @@ local jutsu_variables =
 			end
 
 				ninja.components.chakra:UseAmount(jv.chakra)
-				jutsu.components.useableitem:StopUsingItem()
         end,
     },
 
@@ -809,10 +791,6 @@ local jutsu_variables =
 				ninja.components.talker:Say(jv.strings.wolfgang)
 				consumejutsu = false
 			end
-
-				
-				jutsu.components.useableitem:StopUsingItem()
-			
         end,
     },
 	
@@ -847,9 +825,6 @@ local jutsu_variables =
 				ninja.components.talker:Say(jv.strings.wolfgang)
 				consumejutsu = false
 			end
-
-				jutsu.components.useableitem:StopUsingItem()
-			
         end,
     },
 	
@@ -1040,8 +1015,6 @@ local jutsu_variables =
 			if consumejutsu and not HasInfiniteChakra then
 				depletejutsu(jutsu, ninja)
 				ninja.components.chakra:UseAmount(jv.chakra)
-			else
-				jutsu.components.useableitem:StopUsingItem()
 			end
         end,
     },
@@ -1072,8 +1045,6 @@ local jutsu_variables =
 				ninja.components.talker:Say(jutsu.nochakra)
 				consumejutsu = false
 			end
-				
-				jutsu.components.useableitem:StopUsingItem()
         end,
     },
 	
@@ -1110,8 +1081,6 @@ local jutsu_variables =
 				ninja.components.talker:Say(jv.strings.limit)
 				consumejutsu = false
 			end
-				
-				jutsu.components.useableitem:StopUsingItem()
         end,
     },
 }
@@ -1176,11 +1145,11 @@ local function CreateJutsu(jutsu)
 			owner.AnimState:Hide("ARM_carry")
 			owner.AnimState:Show("ARM_normal")
 		end)
-		
+
 		if jutsu.weapon == nil then -- weapons dont have "useableitem" component so we handle it this way
 			inst:AddTag("nopunch")
-			inst:AddComponent("useableitem")
-			inst.components.useableitem:SetOnUseFn(jutsu.onuse)
+			inst:AddComponent("jutsu_scroll")
+			inst.components.jutsu_scroll.spell = jutsu.onuse
 		else
 			inst:AddComponent("weapon")
 			inst.components.weapon:SetDamage(jutsu.weapon.dmg)
