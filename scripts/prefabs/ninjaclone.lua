@@ -86,12 +86,7 @@ end
 local function getplayer(inst)
 	--local x,y,z = inst.Transform:GetWorldPosition()
 	--local players = TheSim:FindEntities(x, y, z, 50, {"player"}, {"clone"})
-	for k,player in pairs(Ents) do
-		if player.userid ~= nil and player.userid == inst.ninjaid then
-			return player
-		end
-	end
-	return -1
+	return inst.ninja_player or UserToPlayer(inst.ninjaid)
 end
 
 local function retargetfn(inst)
