@@ -307,47 +307,67 @@ local cutplantxml = "images/inventoryimages/cutplant.xml"
 local paperxml = "images/inventoryimages/paper.xml"
 local clayxml = "images/inventoryimages/clay.xml"
 
-
-AddRecipe("paper", { Ingredient("cutplant", 3, cutplantxml) }, RECIPETABS.REFINE, TECH.SCIENCE_ONE,
-nil,nil,nil,nil,nil,
-paperxml
+AddRecipe2(
+  "paper",
+  { Ingredient("cutplant", 3, cutplantxml) },
+  TECH.SCIENCE_ONE,
+  { numtogive = 1, atlas = paperxml, image = nil, nounlock = false },
+  { "REFINE" }
 )
 
-AddRecipe( "gnome_grenade", { Ingredient("paper", 1, paperxml), Ingredient("clay", 3, clayxml) },GLOBAL.RECIPETABS.WAR, TECH.NONE, nil, nil, nil, nil, "deidara",
-"images/inventoryimages/gnome_grenade.xml",
-"gnome_grenade.tex")
-
-AddRecipe("flyingraijinkunai", { Ingredient("marble", 3), Ingredient("lightninggoathorn", 2), Ingredient("horn", 1) }, RECIPETABS.WAR, TECH.SCIENCE_TWO,
-nil,nil,nil,nil,nil,
-"images/inventoryimages/flyingraijinkunai.xml"
-)
-AddRecipe("kusanagi", { Ingredient("houndstooth", 5), Ingredient("marble", 1), Ingredient("moonrocknugget", 1) }, RECIPETABS.WAR, TECH.SCIENCE_TWO,
-nil,nil,nil,nil,nil,
-"images/inventoryimages/kusanagi.xml"
+AddRecipe2(
+  "gnome_grenade",
+  { Ingredient("paper", 1, paperxml), Ingredient("clay", 3, clayxml) },
+  TECH.NONE,
+  { numtogive = 1, atlas = "images/inventoryimages/gnome_grenade.xml", image = "gnome_grenade.tex", nounlock = false, builder_tag = "deidara" },
+  { "CHARACTER" }
 )
 
-AddRecipe("HEADBANDBLACKMISSING", { Ingredient("tentaclespots", 1), Ingredient("cutgrass", 2), Ingredient("flint", 1) }, RECIPETABS.WAR, TECH.SCIENCE_ONE,
-nil,nil,nil,nil,nil,
-"images/inventoryimages/headband.xml"
+AddRecipe2(
+  "flyingraijinkunai",
+  { Ingredient("marble", 3), Ingredient("lightninggoathorn", 2), Ingredient("horn", 1) },
+  TECH.SCIENCE_TWO,
+  { numtogive = 1, atlas = "images/inventoryimages/flyingraijinkunai.xml", nounlock = false },
+  { "WEAPONS" }
 )
 
-AddRecipe("HEADBANDFOG", { Ingredient("tentaclespots", 1), Ingredient("cutgrass", 2), Ingredient("flint", 1) }, RECIPETABS.WAR, TECH.SCIENCE_ONE,
-nil,nil,nil,nil,nil,
-"images/inventoryimages/headband_fog.xml"
+AddRecipe2(
+  "kusanagi",
+  { Ingredient("houndstooth", 5), Ingredient("marble", 1), Ingredient("moonrocknugget", 1) },
+  TECH.SCIENCE_TWO,
+  { numtogive = 1, atlas = "images/inventoryimages/kusanagi.xml", nounlock = false },
+  { "WEAPONS" }
 )
 
-AddRecipe("HEADBANDBLUE", { Ingredient("tentaclespots", 1), Ingredient("cutgrass", 2), Ingredient("flint", 1) }, RECIPETABS.WAR, TECH.SCIENCE_ONE,
-nil,nil,nil,nil,nil,
-"images/inventoryimages/headban.xml"
+local headbands = {
+  { name = "HEADBANDBLACKMISSING", xml = "images/inventoryimages/headband.xml" },
+  { name = "HEADBANDFOG",          xml = "images/inventoryimages/headband_fog.xml" },
+  { name = "HEADBANDBLUE",         xml = "images/inventoryimages/headban.xml" }
+}
+for _, v in ipairs(headbands) do
+  AddRecipe2(
+    v.name,
+    { Ingredient("tentaclespots", 1), Ingredient("cutgrass", 2), Ingredient("flint", 1) },
+    TECH.SCIENCE_ONE,
+    { numtogive = 1, atlas = v.xml, nounlock = false },
+    { "ARMOUR" }
+  )
+end
+
+AddRecipe2(
+  "clay",
+  { Ingredient("ash", 2), Ingredient("charcoal", 1), Ingredient("nitre", 1) },
+  TECH.SCIENCE_ONE,
+  { numtogive = 2, atlas = clayxml, nounlock = false, builder_tag = "deidara" },
+  { "CHARACTER" }
 )
 
-AddRecipe("clay", { Ingredient("ash", 2), Ingredient("charcoal", 1), Ingredient("nitre", 1) }, RECIPETABS.SURVIVAL, TECH.SCIENCE_ONE,
-nil,nil,nil,2,deidara,clayxml
-)
-
-AddRecipe("armor", { Ingredient(CHARACTER_INGREDIENT.HEALTH, 5), Ingredient("charcoal", 10), Ingredient("rope", 2) }, RECIPETABS.WAR, TECH.SCIENCE_ONE,
-nil,nil,nil,nil,nil,
-"images/inventoryimages/armor.xml"
+AddRecipe2(
+  "armor",
+  { Ingredient(CHARACTER_INGREDIENT.HEALTH, 5), Ingredient("charcoal", 10), Ingredient("rope", 2) },
+  TECH.SCIENCE_ONE,
+  { numtogive = 1, atlas = "images/inventoryimages/armor.xml", nounlock = false },
+  { "ARMOUR" }
 )
 
 AddComponentPostInit("playerspawner", function(component)
@@ -378,13 +398,45 @@ local gear_items = {
 
 -------------------------------
 
-local doshik = Recipe("doshik", {Ingredient("twigs", 5)}, RECIPETABS.SURVIVAL, TECH.SCIENCE_TWO)
-local flavoring = Recipe("flavoring", {Ingredient("carrot", 1), Ingredient("blue_cap", 1), Ingredient("green_cap_cooked", 1)}, RECIPETABS.SURVIVAL, TECH.SCIENCE_ONE, nil, nil, nil, 3)
-local con_flav = Recipe("con_flav", {Ingredient("red_cap", 2)}, RECIPETABS.SURVIVAL, TECH.SCIENCE_ONE)
---IMAGES
-doshik.atlas = "images/inventoryimages/doshik.xml"
-flavoring.atlas = "images/inventoryimages/flavoring.xml"
-con_flav.atlas = "images/inventoryimages/con_flav.xml"
+AddRecipe2(
+  "doshik",
+  { Ingredient("twigs", 5) },
+  TECH.SCIENCE_TWO,
+  {
+    atlas     = "images/inventoryimages/doshik.xml",
+    numtogive = 1,
+    nounlock  = false
+  },
+  { "COOKING" }
+)
+
+AddRecipe2(
+  "flavoring",
+  {
+    Ingredient("carrot", 1),
+    Ingredient("blue_cap", 1),
+    Ingredient("green_cap_cooked", 1)
+  },
+  TECH.SCIENCE_ONE,
+  {
+    atlas     = "images/inventoryimages/flavoring.xml",
+    numtogive = 1,
+    nounlock  = false
+  },
+  { "COOKING" }
+)
+
+AddRecipe2(
+  "con_flav",
+  { Ingredient("red_cap", 2) },
+  TECH.SCIENCE_ONE,
+  {
+    atlas     = "images/inventoryimages/con_flav.xml",
+    numtogive = 1,
+    nounlock  = false
+  },
+  { "COOKING" }
+)
 
 --COOKPOT
 AddIngredientValues({"doshik"},				{doshik = 1})
@@ -445,34 +497,48 @@ AddCookerRecipe("cookpot", cooked_doshik_sousages_plus)
 AddCookerRecipe("cookpot", cooked_doshik_hot)
 AddCookerRecipe("cookpot", cooked_doshik_sousages_hot)
 
-
-local jr = -- jutsu recipes, might be messy but that's how I like it ;)
-{
-	{ item = "rinnerebirth", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 2}, ing3 = {"spidergland", 5}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "icerockdome", ing1 = {"paper", 1, paperxml}, ing2 = {"ice", 5}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "rasengan", ing1 = {"paper", 1, paperxml}, ing2 = {"lightbulb", 5}, ing3 = {"feather_crow", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "firerasengan", ing1 = {"rasengan", 1, scrollxml}, ing2 = {"nightmarefuel", 3}, ing3 = {"charcoal", 10}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "infinitedream", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 1}, ing3 = {"blowdart_sleep", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "strengthofa100", ing1 = {"paper", 1, paperxml}, ing2 = {"stinger", 2}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "creationrebirth", ing1 = {"paper", 1, paperxml}, ing2 = {"redgem", 1}, ing3 = {"healingsalve", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "creationrebirth100", ing1 = {"strengthofa100", 1, scrollxml}, ing2 = {"creationrebirth", 1, scrollxml}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "flyingraijin", ing1 = {"paper", 1, paperxml}, ing2 = {"purplegem", 1}, ing3 = {"flyingraijinkunai", 1, flyingkunaixml}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "multimudwall", ing1 = {"paper", 1, paperxml}, ing2 = {"cutstone", 10}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "watergun", ing1 = {"paper", 1, paperxml}, ing2 = {"waterballoon", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "expansion", ing1 = {"paper", 1, paperxml}, ing2 = {"bonestew", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "superexpansion", ing1 = {"expansion", 1, scrollxml}, ing2 = {"bonestew", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "deepforestemergence", ing1 = {"paper", 1, paperxml}, ing2 = {"log", 15}, ing3 = {"fertilizer", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "bubble", ing1 = {"paper", 1, paperxml}, ing2 = {"gunpowder", 2}, ing3 = {"waterballoon", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "shadowclone", ing1 = {"paper", 1, paperxml}, ing2 = {"beardhair", 2}, ing3 = {"lifeinjector", 1}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-	{ item = "makerain", ing1 = {"paper", 1, paperxml}, ing2 = {"purplegem", 3}, ing3 = {"moonrocknugget", 3}, tab = RECIPETABS.MAGIC, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex }
+local jr = {
+    { item = "rasengan",           ing1 = {"paper", 1, paperxml},      		ing2 = {"lightbulb", 5},                  ing3 = {"feather_crow", 2},                      tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "firerasengan",       ing1 = {"rasengan", 1, scrollxml},  		ing2 = {"nightmarefuel", 3},              ing3 = {"charcoal", 10},                         tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+	{ item = "icerockdome",        ing1 = {"paper", 1, paperxml},      		ing2 = {"ice", 5},                        tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "strengthofa100",     ing1 = {"paper", 1, paperxml},      		ing2 = {"stinger", 2},                    tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "creationrebirth100", ing1 = {"strengthofa100", 1, scrollxml}, ing2 = {"creationrebirth", 1, scrollxml}, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "multimudwall",       ing1 = {"paper", 1, paperxml},     		ing2 = {"cutstone", 10},                  tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "watergun",           ing1 = {"paper", 1, paperxml},     		ing2 = {"waterballoon", 1},               tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "expansion",          ing1 = {"paper", 1, paperxml},     		ing2 = {"bonestew", 1},                   tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "superexpansion",     ing1 = {"expansion", 1, scrollxml},		ing2 = {"bonestew", 1},                   tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "flyingraijin",       ing1 = {"paper", 1, paperxml},     		ing2 = {"purplegem", 1},                  ing3 = {"flyingraijinkunai", 1, flyingkunaixml}, tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "shadowclone",        ing1 = {"paper", 1, paperxml},     		ing2 = {"beardhair", 2},                  ing3 = {"lifeinjector", 1},                      tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "creationrebirth",    ing1 = {"paper", 1, paperxml},      		ing2 = {"redgem", 1},                     ing3 = {"healingsalve", 1},                      tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "bubble",             ing1 = {"paper", 1, paperxml},     		ing2 = {"gunpowder", 2},                  ing3 = {"waterballoon", 1},                      tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "infinitedream",      ing1 = {"paper", 1, paperxml},      		ing2 = {"redgem", 1},                     ing3 = {"blowdart_sleep", 2},                    tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "deepforestemergence",ing1=  {"paper",1,paperxml},       		ing2 = {"log", 15},                       ing3 = {"fertilizer", 1},                        tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "makerain",           ing1 = {"paper", 1, paperxml},     		ing2 = {"purplegem", 3},                  ing3 = {"moonrocknugget", 3},                    tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "rinnerebirth",       ing1 = {"paper", 1, paperxml},      		ing2 = {"redgem", 2},                     ing3 = {"spidergland", 5},                       tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
 }
 
-for i, v in pairs(jr) do
-	if jr[i].ing3 == nil then
-		AddRecipe(jr[i].item, {Ingredient(jr[i].ing1[1], jr[i].ing1[2], jr[i].ing1[3]), Ingredient(jr[i].ing2[1], jr[i].ing2[2], jr[i].ing2[3]) }, jr[i].tab, jr[i].tech, nil, nil, nil, nil, nil, jr[i].xml, jr[i].tex)
-	else
-		AddRecipe(jr[i].item, {Ingredient(jr[i].ing1[1], jr[i].ing1[2], jr[i].ing1[3]), Ingredient(jr[i].ing2[1], jr[i].ing2[2], jr[i].ing2[3]), Ingredient(jr[i].ing3[1], jr[i].ing3[2], jr[i].ing3[3]) }, jr[i].tab, jr[i].tech, nil, nil, nil, nil, nil, jr[i].xml, jr[i].tex)
-	end
+for _, v in ipairs(jr) do
+    local ings = {
+        Ingredient(v.ing1[1], v.ing1[2], v.ing1[3]),
+        Ingredient(v.ing2[1], v.ing2[2], v.ing2[3])
+    }
+    if v.ing3 then
+        table.insert(ings, Ingredient(v.ing3[1], v.ing3[2], v.ing3[3]))
+    end
+
+    AddRecipe2(
+        v.item,
+        ings,
+        v.tech,
+        {
+            numtogive   = v.numtogive or 1,
+            atlas       = v.xml,
+            image       = v.tex,
+            nounlock    = v.nounlock or false,
+            builder_tag = v.builder_tag
+        },
+        { "MAGIC" }
+    )
 end
 
 local ACTIONS = GLOBAL.ACTIONS
