@@ -1,7 +1,7 @@
 name = "Jutsu Mod"
 description = "chakra and jutsu"
 author = "nebrosarth"
-version = "37"
+version = "38"
 
 forumthread = ""
 

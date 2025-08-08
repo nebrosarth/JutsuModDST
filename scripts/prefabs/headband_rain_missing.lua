@@ -71,10 +71,10 @@ local function commonfn(anim, atlas)
 		owner.AnimState:OverrideSymbol("swap_hat", anim, "swap_hat")
 		owner.AnimState:Show("HAT")
 		if owner:HasTag("madara") then
-			owner.components.chakra.max = 250 else
+			owner.components.chakra:SetMaxChakra(250) else
 			if owner:HasTag("deidara") then
-				owner.components.chakra.max = 200 else
-				owner.components.chakra.max = 150
+				owner.components.chakra:SetMaxChakra(200) else
+				owner.components.chakra:SetMaxChakra(150)
 			end
 		end
 		chakrachange(inst, owner, 2)
@@ -83,10 +83,10 @@ local function commonfn(anim, atlas)
     inst.components.equippable:SetOnUnequip(function(inst, owner) 
 		owner.AnimState:Hide("HAT")
 			if owner:HasTag("madara") then
-				owner.components.chakra.max = 200 else
+				owner.components.chakra:SetMaxChakra(200) else
 				if owner:HasTag("deidara") then
-					owner.components.chakra.max = 150 else
-					owner.components.chakra.max = 100
+					owner.components.chakra:SetMaxChakra(150) else
+					owner.components.chakra:SetMaxChakra(100)
 				end
 			end
 		chakrachange(inst, owner, 1)
