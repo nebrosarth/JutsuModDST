@@ -193,21 +193,21 @@ TUNING.ARMOR =
 	DESCRIBE = "Защищает грудь и плечи"
 }
 
-TUNING.HEADBANDBLACKMISSING = 
+TUNING.HEADBAND_RAIN_MISSING = 
 {
 	NAME = "Протектор Деревни Дождя",
 	RECIPE = "Перечеркнут.",
 	DESCRIBE = "Увеличивает регенерацию чакры"
 }
 
-TUNING.HEADBANDFOG = 
+TUNING.HEADBAND_FOG = 
 {
 	NAME = "Протектор Деревни Тумана",
 	RECIPE = "Скрыт в тумане.",
 	DESCRIBE = "Увеличивает регенерацию чакры"
 }
 
-TUNING.HEADBANDBLUE = 
+TUNING.HEADBAND_LEAF = 
 {
 	NAME = "Протектор Деревни Листа",
 	RECIPE = "Твой дом там, где о тебе думают.",

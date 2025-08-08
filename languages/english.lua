@@ -194,21 +194,21 @@ TUNING.ARMOR =
 }
 
 
-TUNING.HEADBANDBLACKMISSING = 
+TUNING.HEADBAND_RAIN_MISSING = 
 {
 	NAME = "Protector of the Village of Rain",
 	RECIPE = "Crossed out.",
 	DESCRIBE = "Increases chakra regeneration"
 }
 
-TUNING.HEADBANDFOG = 
+TUNING.HEADBAND_FOG = 
 {
 	NAME = "Protector of the Village of Mist",
 	RECIPE = "Hidden in the fog.",
 	DESCRIBE = "Increases chakra regeneration"
 }
 
-TUNING.HEADBANDBLUE = 
+TUNING.HEADBAND_LEAF = 
 {
 	NAME = "Protector of the Village of Leaf",
 	RECIPE = "A place where someone still thinks about you is a place you can call home.",

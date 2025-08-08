@@ -34,16 +34,17 @@ local assets = {
         Asset( "ANIM", "anim/naruto.zip" ),
         Asset( "ANIM", "anim/ghost_naruto_build.zip" ),
         Asset("ATLAS", "images/inventoryimages/headband_leaf.xml"),
+        Asset("IMAGE", "images/inventoryimages/headband_leaf.tex")
 }
 local prefabs = {}
 
 -- Custom starting items
 local start_inv = {
- "HEADBANDBLUE"
+ "headband_leaf"
 }
 
 TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT.NARUTO = start_inv
-TUNING.STARTING_ITEM_IMAGE_OVERRIDE["HEADBANDBLUE"] = {atlas = "images/inventoryimages/headband_leaf.xml", image = "headband_leaf.tex" }
+TUNING.STARTING_ITEM_IMAGE_OVERRIDE["headband_leaf"] = {atlas = "images/inventoryimages/headband_leaf.xml", image = "headband_leaf.tex" }
 
 -- When the character is revived from human
 local function onbecamehuman(inst)

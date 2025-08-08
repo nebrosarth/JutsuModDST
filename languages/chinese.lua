@@ -194,21 +194,21 @@ TUNING.ARMOR =
 }
 
 
-TUNING.HEADBANDBLACKMISSING = 
+TUNING.HEADBAND_RAIN_MISSING = 
 {
 	NAME = "雨之村的守护者",
 	RECIPE = "被划掉了。",
 	DESCRIBE = "增加查克拉回复速度。"
 }
 
-TUNING.HEADBANDFOG = 
+TUNING.HEADBAND_FOG = 
 {
 	NAME = "雾之村的守护者",
 	RECIPE = "隐藏在雾中。",
 	DESCRIBE = "增加查克拉回复速度。"
 }
 
-TUNING.HEADBANDBLUE = 
+TUNING.HEADBAND_LEAF = 
 {
 	NAME = "叶之村的守护者",
 	RECIPE = "有人仍然想着你的地方就是你可以称之为家的地方。",
