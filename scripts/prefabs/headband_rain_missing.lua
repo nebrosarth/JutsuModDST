@@ -20,7 +20,7 @@ end
 
 local function chakrachange(inst, owner, chargeamount)
 	if owner.components.chakra ~= nil then
-		owner.components.chakra:StartCharge(chargeamount, 3/2)
+		owner.components.chakra:SetChargeAmount(chargeamount)
 	end
 end
 

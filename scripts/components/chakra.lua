@@ -120,6 +120,12 @@ function Chakra:StartCharge(amount, period, interruptcurrentcharge)
     end
 end
 
+function Chakra:SetChargeAmount(amount)
+    if amount ~= nil then
+        self.charge.amount = amount
+	end
+end
+
 function Chakra:StopCharge()
     if self.charge ~= nil then
         if self.charge.task ~= nil then

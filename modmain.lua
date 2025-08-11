@@ -690,7 +690,9 @@ end end)
 	
 	if inst.components.chakra == nil then
 		inst:AddComponent("chakra")
-		inst.components.chakra:StartCharge(1, 3/2)
+        if TheWorld.ismastersim then
+            inst.components.chakra:StartCharge(1, 3/2)
+        end
 		inst:ListenForEvent("death", DeathChakra)
 		inst:ListenForEvent("respawnfromghost", RespawnChakra)
 		
