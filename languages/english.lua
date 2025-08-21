@@ -148,6 +148,23 @@ TUNING.SUPEREXPANSION =
 	USE = "Super Expansion Jutsu!"
 }
 
+TUNING.SUSANOO =
+{
+    NAME = "Susanoo",
+    RECIPE = "The legendary jutsu of the war god.",
+    DESCRIBE = "Summon the invincible chakra avatar! (150 chakra)",
+    USE = "Susanoo jutsu!",
+	CANT_USE = "I can't use Susanoo!"
+}
+
+TUNING.SUSANOO_MADARA =
+{
+    NAME = "Perfect Susanoo",
+    RECIPE = "Absolute defense and destruction, available only to me.",
+    DESCRIBE = "Envelop yourself with the divine chakra warrior! (150 chakra)",
+    USE = "Perfect Susanoo!"
+}
+
 TUNING.DEEPFORESTEMERGENCE =
 {
 	NAME = "Deep Forest Emergence Scroll",

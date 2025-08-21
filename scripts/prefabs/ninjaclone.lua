@@ -167,7 +167,7 @@ local function PeriodicChecks(inst)
 			
 			if clonemaker.clones ~= nil and inst.components.chakra.max ~= (inst.basemaxchakra / clonemaker.clones) then
 				inst.components.chakra:SetMaxChakra(inst.basemaxchakra / clonemaker.clones)
-				inst.components.health.maxhealth = inst.basemaxhealth / clonemaker.clones
+				inst.components.health:SetMaxHealth(inst.basemaxhealth / clonemaker.clones)
 			end
 			
 			if inst.components.chakra.current > inst.components.chakra.max then
@@ -176,6 +176,29 @@ local function PeriodicChecks(inst)
 			
 			if inst.components.health.currenthealth > inst.components.health.maxhealth then
 				inst.components.health.currenthealth = inst.components.health.maxhealth
+			end
+
+			if clonemaker:HasTag("susanoo") and not inst:HasTag("susanoo") then
+				inst.components.health.absorb = clonemaker.components.health.absorb
+				inst.components.combat.damagemultiplier = clonemaker.components.combat.damagemultiplier
+				inst.Light:Enable(true)
+				inst.Light:SetRadius(4)
+				inst.Light:SetIntensity(0.8)
+				inst.Light:SetFalloff(0.75)
+				inst.AnimState:SetMultColour(1, 1, 0, 0.7)
+				inst.AnimState:SetAddColour(0, 0, 0.3, 0)
+
+				local clonemaker_speed = clonemaker.components.locomotor:GetExternalSpeedMultiplier(clonemaker, "susanoo_speed")
+				inst.components.locomotor:SetExternalSpeedMultiplier(inst, "susanoo_speed", clonemaker_speed)
+				inst:AddTag("susanoo")
+			elseif not clonemaker:HasTag("susanoo") and inst:HasTag("susanoo") then
+				inst.components.health.absorb = clonemaker.components.health.absorb
+				inst.components.combat.damagemultiplier = clonemaker.components.combat.damagemultiplier
+				inst.Light:Enable(false)
+				inst.AnimState:SetMultColour(1, 1, 1, 1)
+				inst.AnimState:SetAddColour(0, 0, 0, 0)
+				inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "susanoo_speed")
+				inst:RemoveTag("susanoo")
 			end
 			
 			if clonemaker.components.beard ~= nil then
@@ -297,7 +320,9 @@ local function OnSummoned(inst)
 				maxchakra = inst.basemaxchakra
 				maxhealth = inst.basemaxhealth
 			end
-			inst.components.health.maxhealth = maxhealth
+			inst.components.health:SetMaxHealth(maxhealth)
+			local current_hp = clonemaker.components.health.currenthealth / clonemaker.components.health.maxhealth
+			inst.components.health:SetCurrentHealth(maxhealth * current_hp)
 			--inst.components.chakra.max = inst.maxchakra
 			inst.components.chakra:SetMaxChakra(maxchakra)
 			inst.components.chakra:SetCurrentChakra(maxchakra)
@@ -384,6 +409,13 @@ local function clonemain()
 	
 	-----
 	
+	inst.entity:AddLight()
+	inst.Light:SetColour(1, 1, 1)
+    inst.Light:SetFalloff(0.85)
+    inst.Light:SetIntensity(0.85)
+    inst.Light:SetRadius(16)
+    inst.Light:Enable(false)
+
 	inst.entity:SetPristine()
 
 	inst.persists = false
@@ -492,14 +524,18 @@ local function clonemain()
 			if inst.body then inst.body:Remove() end
 			if inst.hand then inst.hand:Remove() end
 			local clonemaker = getplayer(inst)
-			if clonemaker ~= -1 then
+			if clonemaker ~= -1 and clonemaker ~= nil then
 				clonemaker.components.chakra:PenaltyDelta(-clonemaker.components.chakra.max * (20/100))-- 20 will be configurable
 				clonemaker.clones = clonemaker.clones - 1
 				if clonemaker.clones == 0 then
 					clonemaker.clones = nil
 				end
 			end
-			inst:DoTaskInTime(0.5, function() SpawnPrefab("smoke").Transform:SetPosition(inst.Transform:GetWorldPosition()) end)
+			inst:DoTaskInTime(0.5, function()
+				if inst then
+					SpawnPrefab("smoke").Transform:SetPosition(inst.Transform:GetWorldPosition())
+				end
+			end)
 		end)
 	
 	-----

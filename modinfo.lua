@@ -1,7 +1,7 @@
 name = "Jutsu Mod"
 description = "chakra and jutsu"
 author = "nebrosarth"
-version = "39"
+version = "40"
 
 forumthread = ""
 
@@ -33,4 +33,4 @@ configuration_options =
     
 }
 
-server_filter_tags = {"Naruto", "Chakra", "Jutsu", "Ninja", "Deidara", "Madara", "Kusanagi", "Armor", "Kunai"}
+server_filter_tags = {"Naruto", "Chakra", "Jutsu", "Ninja", "Deidara", "Madara", "Susanoo", "Kusanagi", "Armor", "Kunai"}

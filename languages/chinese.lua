@@ -148,6 +148,23 @@ TUNING.SUPEREXPANSION =
 	USE = "超倍化之术！"
 }
 
+TUNING.SUSANOO =
+{
+    NAME = "须佐能乎",
+    RECIPE = "战神的传说之术。",
+    DESCRIBE = "召唤无敌的查克拉化身！(需要150查克拉)",
+    USE = "须佐能乎之术！",
+	CANT_USE = "我不会使用须佐能乎！"
+}
+
+TUNING.SUSANOO_MADARA =
+{
+    NAME = "完全须佐能乎",
+    RECIPE = "绝对的防御与破坏，只有我才能使用。",
+    DESCRIBE = "用神圣的查克拉战士包裹自己！(需要150查克拉)",
+    USE = "完全须佐能乎！"
+}
+
 TUNING.DEEPFORESTEMERGENCE =
 {
 	NAME = "树界降临卷轴",

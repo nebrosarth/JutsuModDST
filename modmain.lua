@@ -181,6 +181,7 @@ STRINGS.NAMES.SUPEREXPANSION = TUNING.SUPEREXPANSION.NAME
 STRINGS.NAMES.DEEPFORESTEMERGENCE = TUNING.DEEPFORESTEMERGENCE.NAME
 STRINGS.NAMES.BUBBLE = TUNING.BUBBLE.NAME
 STRINGS.NAMES.SHADOWCLONE = TUNING.SHADOWCLONE.NAME
+STRINGS.NAMES.SUSANOO_MADARA = TUNING.SUSANOO_MADARA.NAME
 
 STRINGS.NAMES.FLYINGRAIJINKUNAI = TUNING.FLYINGRAIJINKUNAI.NAME
 STRINGS.NAMES.RAIJINKUNAI = TUNING.RAIJINKUNAI.NAME
@@ -248,6 +249,7 @@ STRINGS.RECIPE_DESC.SUPEREXPANSION = TUNING.SUPEREXPANSION.RECIPE
 STRINGS.RECIPE_DESC.DEEPFORESTEMERGENCE = TUNING.DEEPFORESTEMERGENCE.RECIPE
 STRINGS.RECIPE_DESC.BUBBLE = TUNING.BUBBLE.RECIPE
 STRINGS.RECIPE_DESC.SHADOWCLONE = TUNING.SHADOWCLONE.RECIPE
+STRINGS.RECIPE_DESC.SUSANOO_MADARA = TUNING.SUSANOO_MADARA.RECIPE
 
 STRINGS.RECIPE_DESC.FLYINGRAIJINKUNAI = TUNING.FLYINGRAIJINKUNAI.RECIPE
 STRINGS.RECIPE_DESC.HEADBAND_FOG = TUNING.HEADBAND_FOG.RECIPE
@@ -277,6 +279,7 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.SUPEREXPANSION = TUNING.SUPEREXPANSION.DESCR
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.DEEPFORESTEMERGENCE = TUNING.DEEPFORESTEMERGENCE.DESCRIBE
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.BUBBLE = TUNING.BUBBLE.DESCRIBE
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.SHADOWCLONE = TUNING.SHADOWCLONE.DESCRIBE
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.SUSANOO_MADARA = TUNING.SUSANOO_MADARA.DESCRIBE
 
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.FLYINGRAIJINKUNAI = TUNING.FLYINGRAIJINKUNAI.DESCRIBE
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.HEADBAND_RAIN_MISSING = TUNING.HEADBAND_RAIN_MISSING.DESCRIBE
@@ -516,9 +519,10 @@ local jr = {
     { item = "creationrebirth",    ing1 = {"paper", 1, paperxml},      		ing2 = {"redgem", 1},                     ing3 = {"healingsalve", 1},                      tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
     { item = "bubble",             ing1 = {"paper", 1, paperxml},     		ing2 = {"gunpowder", 2},                  ing3 = {"waterballoon", 1},                      tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
     { item = "infinitedream",      ing1 = {"paper", 1, paperxml},      		ing2 = {"redgem", 1},                     ing3 = {"blowdart_sleep", 2},                    tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
-    { item = "deepforestemergence",ing1=  {"paper",1,paperxml},       		ing2 = {"log", 15},                       ing3 = {"fertilizer", 1},                        tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "deepforestemergence",ing1 = {"paper", 1, paperxml},       	ing2 = {"log", 15},                       ing3 = {"fertilizer", 1},                        tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
     { item = "makerain",           ing1 = {"paper", 1, paperxml},     		ing2 = {"purplegem", 3},                  ing3 = {"moonrocknugget", 3},                    tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
     { item = "rinnerebirth",       ing1 = {"paper", 1, paperxml},      		ing2 = {"redgem", 2},                     ing3 = {"spidergland", 5},                       tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex },
+    { item = "susanoo_madara",     ing1 = {"paper", 1, paperxml},           ing2 = {"purplegem", 2},                  ing3 = {"nightmarefuel", 10},  ing4 = {"thulecite", 2},  tech = TECH.SCIENCE_TWO, xml = scrollxml, tex = scrolltex, builder_tag = "susanoo_builder", tabs = { "CHARACTER" } },
 }
 
 for _, v in ipairs(jr) do
@@ -528,6 +532,10 @@ for _, v in ipairs(jr) do
     }
     if v.ing3 then
         table.insert(ings, Ingredient(v.ing3[1], v.ing3[2], v.ing3[3]))
+    end
+
+    if v.ing4 then
+        table.insert(ings, Ingredient(v.ing4[1], v.ing4[2], v.ing4[3]))
     end
 
     AddRecipe2(
@@ -541,31 +549,26 @@ for _, v in ipairs(jr) do
             nounlock    = v.nounlock or false,
             builder_tag = v.builder_tag
         },
-        { "MAGIC" }
+        v.tabs or { "MAGIC" }
     )
 end
 
 local ACTIONS = GLOBAL.ACTIONS
 
-AddPrefabPostInit("world", function(world)
-    world:ListenForEvent("castjutsu_scroll_request", function(_, data)
-        local jutsu_scroll = data.jutsu_scroll
-        if jutsu_scroll and jutsu_scroll.components.jutsu_scroll then
-            jutsu_scroll.components.jutsu_scroll:Cast()
-        end
-    end)
-end)
-
 AddAction("CASTJUTSU_SCROLL", STRINGS.ACTIONS.JUTSU_CAST, function(act)
 	local target = act.target or act.invobject
 	if target ~= nil and target.components.jutsu_scroll ~= nil then
-		target.components.jutsu_scroll:Cast()
+        if target.components.jutsu_scroll:Precheck() then
+            target.components.jutsu_scroll:Cast()
+        end
 	end
 	return true
 end)
 
 AddComponentAction("INVENTORY", "jutsu_scroll", function(inst, doer, actions, right)
-	table.insert(actions, ACTIONS.CASTJUTSU_SCROLL)
+    if inst.replica.jutsu_scroll and inst.replica.jutsu_scroll:Precheck() then
+	    table.insert(actions, ACTIONS.CASTJUTSU_SCROLL)
+    end
 end)
 
 local ActionHandler = GLOBAL.ActionHandler

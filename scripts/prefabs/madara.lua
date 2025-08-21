@@ -39,6 +39,7 @@ end
 local common_postinit = function(inst) 
 	-- Minimap icon
 	inst:AddTag('madara')
+	inst:AddTag('susanoo_builder')
 	inst.MiniMapEntity:SetIcon( "madara.tex" )
 end
 

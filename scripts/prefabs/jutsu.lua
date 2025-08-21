@@ -4,6 +4,7 @@ local assets =
 	Asset("ANIM", "anim/pixel.zip"),
 	Asset("ANIM", "anim/scroll.zip"),
     Asset("ANIM", "anim/swap_scroll.zip"),
+    Asset("ANIM", "anim/susanoo_madara.zip"),
 }
 
 
@@ -53,10 +54,12 @@ local function sizechange(ninja, current, increment, final, overtime, boost)
 			ninja.components.combat.damagemultiplier = 1
 		end
 		
-		if current[1] < final[1] then
-			ninja.sg:GoToState("powerup")
-		else
-			ninja.sg:GoToState("powerdown")
+		if not ninja:HasTag("playerghost") then
+			if current[1] < final[1] then
+				ninja.sg:GoToState("powerup")
+			else
+				ninja.sg:GoToState("powerdown")
+			end
 		end
 		
 		ninja.expand = ninja:DoPeriodicTask(overtime, 
@@ -70,6 +73,36 @@ local function sizechange(ninja, current, increment, final, overtime, boost)
 			else
 				ninja.components.combat.damagemultiplier = ninja.components.combat.damagemultiplier + boost
 				ninja.components.hunger.hungerrate = ninja.components.hunger.hungerrate + (boost * 1.5)
+				ninja.expand:Cancel()
+				ninja.expand = nil
+			end
+		end)
+	end
+end
+
+local function sizechange_susanoo(ninja, current, increment, final, overtime)
+	if ninja.expand == nil then
+		if ninja.components.combat.damagemultiplier == nil then
+			ninja.components.combat.damagemultiplier = 1
+		end
+		
+		if not ninja:HasTag("playerghost") then
+			if current[1] < final[1] then
+				ninja.sg:GoToState("powerup")
+			else
+				ninja.sg:GoToState("powerdown")
+			end
+		end
+		
+		ninja.expand = ninja:DoPeriodicTask(overtime, 
+		function()
+			if current[1] ~= final[1] then
+				ninja.Transform:SetScale(current[1] + increment, current[2] + increment, current[3] + increment)
+				
+				current[1] = current[1] + increment
+				current[2] = current[2] + increment
+				current[3] = current[3] + increment
+			else
 				ninja.expand:Cancel()
 				ninja.expand = nil
 			end
@@ -180,6 +213,96 @@ local function depletejutsu(jutsu, ninja)
 	else
 		jutsu.components.stackable:SetStackSize(jutsu.components.stackable:StackSize() - 1)
 	end
+end
+
+local function expansion_precheck(jutsu, ninja)
+	ninja = jutsu.components.inventoryitem.owner or ninja
+	local jv = jutsu.vars
+	if ninja.prefab == "wolfgang" then
+		ninja.components.talker:Say(jv.strings.wolfgang)
+		return
+	end
+	if ninja:HasTag("jutsu_giant") or not jutsu.components.jutsu_scroll:Ready() then
+		ninja.components.talker:Say(jv.strings.cooldown)
+		return false
+	end
+	return true
+end
+
+local function summon_susanoo(jutsu, ninja)
+	local jv = jutsu.vars
+	ninja = jutsu.components.inventoryitem.owner or ninja
+	local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
+	local consumejutsu = true
+	local susanoo = {}
+	if ninja.prefab == "madara" then
+		susanoo = { size_mul = 3.0, attack_bonus = 2.0, speed_mul = 0.4, damage_resist = 0.80, anim_build = "susanoo_madara" }
+	end
+	
+	ninja.components.talker:Say(jv.strings.use)
+	jutsu.components.jutsu_scroll:SetCooldown(jv.size.cooldown)
+	local x, y, z = ninja.Transform:GetWorldPosition()
+	local fx = SpawnPrefab("collapse_big")
+	fx.Transform:SetPosition(x, y, z)
+	
+	local nx, ny, nz = ninja.Transform:GetScale()
+	sizechange_susanoo(ninja,
+				{nx, ny, nz},
+				nx/2,
+				{nx * susanoo.size_mul, ny * susanoo.size_mul, nz * susanoo.size_mul},
+				.25)
+	ninja.components.locomotor:SetExternalSpeedMultiplier(ninja, "susanoo_speed", susanoo.speed_mul)
+
+	local original_absorb = ninja.components.health.absorbamount or 0
+	ninja.components.health:SetAbsorptionAmount(susanoo.damage_resist)
+
+	local original_damage = ninja.components.combat.damagemultiplier
+	ninja.components.combat.damagemultiplier = original_damage + susanoo.attack_bonus
+	local original_hunger = ninja.components.hunger.hungerrate
+	ninja.components.hunger.hungerrate = original_hunger + (susanoo.attack_bonus)
+
+	local original_build = ninja.AnimState:GetBuild()
+	ninja.AnimState:SetBuild(susanoo.anim_build)
+
+	ninja.Light:Enable(true)
+	ninja.Light:SetColour(1, 1, 1)
+	ninja.Light:SetRadius(4)
+	ninja.Light:SetIntensity(0.8)
+	ninja.Light:SetFalloff(0.75)
+	ninja.AnimState:SetMultColour(1, 1, 0, 0.7)
+	ninja.AnimState:SetAddColour(0, 0, 0.3, 0)
+
+	ninja:AddTag("susanoo")
+	ninja:AddTag("jutsu_giant")
+
+	ninja.components.chakra:UseAmount(jv.chakra)
+	ninja:DoTaskInTime(jv.size.duration, function() 
+		local x, y, z = ninja.Transform:GetWorldPosition()
+		local fx = SpawnPrefab("collapse_big")
+		fx.Transform:SetPosition(x, y, z)
+
+		sizechange_susanoo(ninja,
+					{nx*susanoo.size_mul, ny*susanoo.size_mul, nz*susanoo.size_mul},
+					-nx/2,
+					{nx, ny, nz},
+					.25)
+		ninja.components.locomotor:RemoveExternalSpeedMultiplier(ninja, "susanoo_speed")
+		ninja.components.health:SetAbsorptionAmount(original_absorb)
+
+		ninja.components.combat.damagemultiplier = original_damage
+		ninja.components.hunger.hungerrate = original_hunger
+		if not ninja:HasTag("playerghost") then
+			ninja.AnimState:SetBuild(original_build)
+		end
+
+		ninja.Light:Enable(false)
+		ninja.AnimState:SetMultColour(1, 1, 1, 1)
+		ninja.AnimState:SetAddColour(0, 0, 0, 0)
+
+		ninja:RemoveTag("susanoo")
+		ninja:RemoveTag("jutsu_giant")
+	end)
+	ninja:DoTaskInTime(jutsu.components.jutsu_scroll.cooldown, function() jutsu.components.jutsu_scroll:SetCooldown(0) end)
 end
 
 --- ACTUAL JUTSU FUNCTIONS ---
@@ -767,30 +890,22 @@ local jutsu_variables =
 		strings = { use = TUNING.EXPANSION.USE, cooldown = TUNING.EXPANSION.COOLDOWN, wolfgang = TUNING.EXPANSION.WOLFGANG },
 		tags = { "strength", "boost" },
 		size = {duration = 20, cooldown = 25},
+		precheck = expansion_precheck,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
-			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
-			local canuse = ninja.prefab ~= "wolfgang"
-			local consumejutsu = true
-			
-			if canuse then
-				if ninja.onsizecooldown == nil then
-					ninja.components.talker:Say(jv.strings.use)
-					ninja.onsizecooldown = jv.size.cooldown
-					local nx, ny, nz = ninja.Transform:GetScale()
-					sizechange(ninja, {nx, ny, nz}, nx/4, {nx*2, ny*2, nz*2}, .25, 0.25)
-					ninja.components.chakra:UseAmount(jv.chakra)
-					ninja:DoTaskInTime(jv.size.duration, function() sizechange(ninja, {nx*2, ny*2, nz*2}, -nx/4, {nx, ny, nz}, .25, -0.25) end)	
-					ninja:DoTaskInTime(ninja.onsizecooldown, function() ninja.onsizecooldown = nil end)		
-				else
-					ninja.components.talker:Say(jv.strings.cooldown)
-					consumejutsu = false
-				end
-			else
-				ninja.components.talker:Say(jv.strings.wolfgang)
-				consumejutsu = false
-			end
+
+			ninja.components.talker:Say(jv.strings.use)
+			jutsu.components.jutsu_scroll:SetCooldown(jv.size.cooldown)
+			ninja:AddTag("jutsu_giant")
+			local nx, ny, nz = ninja.Transform:GetScale()
+			sizechange(ninja, {nx, ny, nz}, nx/4, {nx*2, ny*2, nz*2}, .25, 0.25)
+			ninja.components.chakra:UseAmount(jv.chakra)
+			ninja:DoTaskInTime(jv.size.duration, function() 
+				sizechange(ninja, {nx*2, ny*2, nz*2}, -nx/4, {nx, ny, nz}, .25, -0.25)
+				ninja:RemoveTag("jutsu_giant")
+			end)	
+			ninja:DoTaskInTime(jutsu.components.jutsu_scroll:GetCooldown(), function() jutsu.components.jutsu_scroll:SetCooldown(0) end)
         end,
     },
 	
@@ -801,31 +916,48 @@ local jutsu_variables =
 		strings = { use = TUNING.SUPEREXPANSION.USE, cooldown = TUNING.EXPANSION.COOLDOWN, wolfgang = TUNING.EXPANSION.WOLFGANG },
 		tags = { "strength", "boost" },
 		size = {duration = 20, cooldown = 30},
+		precheck = expansion_precheck,
         onuse = function(jutsu, ninja)
 			local jv = jutsu.vars
 			ninja = jutsu.components.inventoryitem.owner or ninja
-			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
-			local canuse = ninja.prefab ~= "wolfgang"
-			local consumejutsu = true
-			
-			if canuse then
-				if ninja.onsizecooldown == nil then
-					ninja.components.talker:Say(jv.strings.use)
-					ninja.onsizecooldown = jv.size.cooldown
-					local nx, ny, nz = ninja.Transform:GetScale()
-					sizechange(ninja, {nx, ny, nz}, nx/2, {nx*3, ny*3, nz*3}, .25, 0.5)
-					ninja.components.chakra:UseAmount(jv.chakra)
-					ninja:DoTaskInTime(jv.size.duration, function() sizechange(ninja, {nx*3, ny*3, nz*3}, -nx/2, {nx, ny, nz}, .25, -0.5) end)	
-					ninja:DoTaskInTime(ninja.onsizecooldown, function() ninja.onsizecooldown = nil end)		
-				else
-					ninja.components.talker:Say(jv.strings.cooldown)
-					consumejutsu = false
-				end
-			else
-				ninja.components.talker:Say(jv.strings.wolfgang)
-				consumejutsu = false
-			end
+
+			ninja.components.talker:Say(jv.strings.use)
+			jutsu.components.jutsu_scroll:SetCooldown(jv.size.cooldown)
+			ninja:AddTag("jutsu_giant")
+			local nx, ny, nz = ninja.Transform:GetScale()
+			sizechange(ninja, {nx, ny, nz}, nx/2, {nx*3, ny*3, nz*3}, .25, 0.5)
+			ninja.components.chakra:UseAmount(jv.chakra)
+			ninja:DoTaskInTime(jv.size.duration, function() sizechange(ninja, {nx*3, ny*3, nz*3}, -nx/2, {nx, ny, nz}, .25, -0.5) end)	
+			ninja:DoTaskInTime(jutsu.components.jutsu_scroll:GetCooldown(), function()
+				jutsu.components.jutsu_scroll:SetCooldown(0)
+				ninja:RemoveTag("jutsu_giant")
+			end)
         end,
+    },
+
+	{
+----- SUSANOO JUTSU -----
+        name = "susanoo_madara",
+		chakra = 100,
+		strings = { use = TUNING.SUSANOO_MADARA.USE, cooldown = TUNING.EXPANSION.COOLDOWN, cant_use = TUNING.SUSANOO.CANT_USE },
+		tags = { "strength", "boost", "susanoo" },
+		size = {duration = 60, cooldown = 90},
+		precheck = function(jutsu, ninja)
+			ninja = jutsu.components.inventoryitem.owner or ninja
+			local jv = jutsu.vars
+			if ninja.prefab ~= "madara" then
+				ninja.components.talker:Say(jv.strings.cant_use)
+				return
+			end
+			local HasInfiniteChakra = ninja.components.chakra:IsInfinite()
+			if (ninja:HasTag("jutsu_giant") or not jutsu.components.jutsu_scroll:Ready())
+				and not HasInfiniteChakra then
+				ninja.components.talker:Say(jv.strings.cooldown)
+				return false
+			end
+			return true
+		end,
+        onuse = summon_susanoo
     },
 	
 	{
@@ -1149,6 +1281,7 @@ local function CreateJutsu(jutsu)
 		if jutsu.weapon == nil then -- weapons dont have "useableitem" component so we handle it this way
 			inst:AddTag("nopunch")
 			inst:AddComponent("jutsu_scroll")
+			inst.components.jutsu_scroll.precheck = jutsu.precheck
 			inst.components.jutsu_scroll.spell = jutsu.onuse
 		else
 			inst:AddComponent("weapon")
